@@ -1,0 +1,14 @@
+.flashes {
+	.flash {
+		padding: 1em;
+		margin: 1em 0;
+	}
+	.flash.info {
+		border: 2px solid $color-info-2;
+		background-color: $color-info-0;
+	}
+	.flash.error {
+		border: 2px solid $color-error-2;
+		background-color: $color-error-0;
+	}
+}

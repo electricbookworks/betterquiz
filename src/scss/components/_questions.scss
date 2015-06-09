@@ -1,0 +1,15 @@
+.question {
+	.question-text {
+		font-size: 1.2em;
+	}
+	.options {
+		.option {
+			input[type="radio"] {
+
+			}
+			.option-text {
+				display: inline-block;
+			}
+		}
+	}
+}

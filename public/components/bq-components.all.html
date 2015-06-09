@@ -1,0 +1,44 @@
+<script src="bq-components.js"></script><template id="bq-paginator-template">
+<style>:host {
+  display: block;
+  width: 100%; }
+
+.pagination {
+  list-style: none; }
+  .pagination li {
+    display: inline-block;
+    color: lightgray; }
+    .pagination li a {
+      padding: 0em 1em;
+      color: darkgray;
+      text-decoration: none; }
+    .pagination li.current {
+      border: 1px solid darkgray; }
+    .pagination li:hover {
+      background-color: lightgray;
+      color: white; }
+      .pagination li:hover a {
+        color: white; }
+</style>
+<div class="component-bq-paginator">
+	<ul class="pagination" data-set="ul">
+		  <li class="arrow unavailable"><a href="">&laquo;</a></li>
+		  <li class="current"><a href="">1</a></li>
+		  <li><a href="">2</a></li>
+		  <li><a href="">3</a></li>
+		  <li><a href="">4</a></li>
+		  <li class="unavailable"><a href="">&hellip;</a></li>
+		  <li><a href="">12</a></li>
+		  <li><a href="">13</a></li>
+		  <li class="arrow"><a href="">&raquo;</a></li>
+	</ul>
+</div></template>
+
+<template id="bq-param-paginator-template">
+<style>:host {
+  display: block;
+  width: 100%; }
+
+</style>
+<div class="component-bq-param-paginator"><div>My bq-param-paginator</div><content /></div></template>
+

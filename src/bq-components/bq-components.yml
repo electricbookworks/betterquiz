@@ -1,0 +1,10 @@
+dest: ../../public/components/
+prefix: bq
+imports: []
+components:
+  - name: paginator
+    imports: []
+    literate: true
+  - name: param-paginator
+    imports: []
+    literate: true

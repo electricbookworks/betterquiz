@@ -1,0 +1,5 @@
+select {
+	// This fixes the 'double arrow' issue in some Firefox's
+	// https://gist.github.com/joaocunha/6273016
+	-moz-appearance: none;
+}

@@ -1,0 +1,9 @@
+$color-info: green;
+$color-info-0: lighten($color-info, 70%);
+$color-info-1: $color-info;
+$color-info-2: darken($color-info, 5%);
+
+$color-error: red;
+$color-error-0: lighten($color-error, 20%);
+$color-error-1: $color-error;
+$color-error-2: darken($color-error, 5%);

@@ -1,0 +1,56 @@
+$color-answer-correct: green;
+$color-answer-incorrect: red;
+$color-answer-actual: gray;
+
+#answers {
+	.answer {
+		margin: 1em 0 1em 0;
+		.question-text {
+
+		}
+		.answer-chosen {
+			&.correct {
+				color: $color-answer-correct;
+				&:after {
+					content: '\2713';
+					float:right;
+				}
+			}
+			&.incorrect {
+				color: $color-answer-incorrect;
+				&:after {
+					content: '\2717';
+					float:right;
+				}
+			}
+		}
+		.answer-actual {
+				color: $color-answer-actual;
+		}
+
+	}
+}
+#score {
+	border-top: 1px solid black;
+	margin: 1em 0;
+	.score {
+		float:right;
+	}
+	.percentage {
+		font-style:italic;
+		&:before { content: '('; }
+		&:after { content: '%)'; }
+		display:block;
+		clear:both;
+		float:right;
+	}
+}
+
+#submit {
+	border-top: 1px solid black;
+	margin: 1em 0;
+	clear:both;
+	input[type="submit"] {
+		display: block;
+	}
+}
