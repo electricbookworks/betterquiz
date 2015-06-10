@@ -4,7 +4,7 @@
  * settings.local.php, change the settings to your particular installation,
  * and DO NOT ADD THIS to your source repo.
  */
-$db = new Database("mariadb.lxc", "betterquiz", "betterquiz", "betterquiz");
+$db = new Database("host", "user", "password", "database");
 define("PANACEA_USERNAME", "X");
 define("PANACEA_PASSWORD", "X");
 define("BULKSMS_USERNAME", "X");
