@@ -70,11 +70,12 @@ class BQAnswer {
 		$db = Database::Get($db);
 		$stmt = $db->Prepare(<<<EOSQL
 			select 
-				o.id, o.option_text, o.correct, o.option_number,
+				o.id, o.option_text, o.correct,
+				o.option_number,
 				q.id, q.question_text, q.question_number
 			from 
 				answer a
-				inner join option o
+				inner join options o
 					on o.id = a.option_id
 				inner join question q
 					on o.question_id = q.id

@@ -210,8 +210,8 @@ class BQExam {
 			delete from answer
 			where exam_id = ?
 			and option_id in (
-				select o2.id from option o
-					inner join option o2
+				select o2.id from options o
+					inner join options o2
 					on o.question_id=o2.question_id
 				where
 					o.id=?
@@ -239,7 +239,7 @@ EOSQL
 			select sum(o.correct) as score, count(*) as total
 			from
 				answer a
-					inner join option o 
+					inner join options o 
 					on a.option_id = o.id
 			where
 				a.exam_id=?
@@ -265,7 +265,7 @@ EOSQL
 			select a.option_id
 			from
 				answer a
-				inner join option o
+				inner join options o
 					on o.id= a.option_id
 			where
 				o.question_id=?

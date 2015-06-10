@@ -1,4 +1,4 @@
-create table user_forgot (
+create table if not exists user_forgot (
 	uid bigint not null,
 	email varchar(100) null,
 	mobile varchar(100) null,

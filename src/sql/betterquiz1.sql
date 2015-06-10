@@ -1,4 +1,4 @@
-create table user (
+create table if not exists user (
 	id bigint auto_increment not null,
 	fullname varchar(250) not null,
 	email varchar(100) null,
@@ -8,7 +8,7 @@ create table user (
 	primary key(id)
 );
 
-create table exam (
+create table if not exists exam (
 	id bigint auto_increment not null,
 	quiz_id bigint not null,
 	user_id bigint not null,
@@ -22,12 +22,12 @@ create table exam (
 		on delete cascade
 );
 
-create table answer (
+create table if not exists answer (
 	exam_id bigint not null,
 	option_id bigint not null,
 	primary key(exam_id, option_id),
 	foreign key(exam_id) references exam(id)
 		on delete cascade,
-	foreign key(option_id) references option(id)
+	foreign key(option_id) references options(id)
 		on delete cascade
 );

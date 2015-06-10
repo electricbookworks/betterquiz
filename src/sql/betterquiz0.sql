@@ -24,7 +24,7 @@ create table if not exists question (
 		on delete cascade
 );
 
-create table if not exists option (
+create table if not exists options (
 	id bigint auto_increment not null,
 	question_id bigint not null,
 	option_text text not null,

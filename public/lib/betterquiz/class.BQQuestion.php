@@ -151,7 +151,7 @@ EOSQL
 			$db->Execute($stmt);
 		}
 		if (0==count($this->_options)) {
-			$db->Query("delete from option where question_id=" . $this->_id);
+			$db->Query("delete from options where question_id=" . $this->_id);
 		} else {
 			$keys = array();
 			for ($i=0; $i<count($this->_options); $i++) {
@@ -159,7 +159,7 @@ EOSQL
 				$keys[] = $this->_options[$i]->Id();
 			}
 
-			$db->Query("delete from option where question_id=" .
+			$db->Query("delete from options where question_id=" .
 				$this->_id . " and not id in (" . implode(",", $keys) . ")");
 		}
 	}

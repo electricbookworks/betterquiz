@@ -1,1 +1,1 @@
-drop table user_forgot;
+drop table if exists user_forgot;

@@ -32,7 +32,7 @@ class BQOption {
 	 */
 	public static function LoadById($db, $optionId) {
 		$db = Database::Get($db);
-		$stmt = $db->Prepare("select id, option_text, correct, option_number from option where id=?");
+		$stmt = $db->Prepare("select id, option_text, correct, option_number from options where id=?");
 		$stmt->bind_param("i", $optionId);
 		return self::loadFromStmt($db, $stmt);
 	}
@@ -64,8 +64,8 @@ class BQOption {
 		$db = Database::Get($db);
 		$stmt = $db->Prepare(<<<EOSQL
 			select o2.id, o2.option_text, o2.correct, o2.option_number
-			from option o
-				inner join option o2 on o.question_id = o2.question_id
+			from options o
+				inner join options o2 on o.question_id = o2.question_id
 			where
 				o2.correct=1
 				and o.id=?
@@ -110,13 +110,13 @@ EOSQL
 		$correct = $this->_correct ? 1 : 0;
 		if (0==$this->_id) {
 			$stmt = $db->Prepare(
-				"insert into option (question_id, option_number, option_text, correct) values (?,?,?,?)");
+				"insert into options (question_id, option_number, option_text, correct) values (?,?,?,?)");
 			$stmt->bind_param("iisi", $question->Id(), $number, $this->_option, $correct);
 			$db->Execute($stmt);
 			$this->_id = $db->LastInsertId();
 		} else {
 			$stmt = $db->Prepare(
-				"update option set question_id=?, option_number=?, option_text=?, correct=? where id=?");
+				"update options set question_id=?, option_number=?, option_text=?, correct=? where id=?");
 			$stmt->bind_param("iisii", $question->Id(), $number, $this->_option, $correct, $this->_id);
 			$db->Execute($stmt);
 		}
@@ -128,8 +128,12 @@ EOSQL
 	 */
 	public static function LoadOptionsForQuestion($db, $questionId) {
 		$options = array();
-		$stmt = $db->Prepare("select id, option_text, correct, option_number from option where " .
-			"question_id=? order by option_number asc");
+		$stmt = $db->Prepare(<<<EOSQL
+			select id, option_text, correct, option_number 
+			from options where 
+			question_id=? order by option_number asc
+EOSQL
+		);
 		$stmt->bind_param("i", $questionId);
 		if (!$db->Execute($stmt)) {
 			throw new RuntimeException($db->error);

@@ -1,1 +1,1 @@
-drop table admins;
+drop table if exists admins;
