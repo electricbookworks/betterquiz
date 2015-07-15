@@ -23,11 +23,11 @@ Flash::Render();
 <div id="register-form">
 <form method="post" action="register.php">
 <input type="hidden" name="qz" value="<?php echo $qz; ?>" />
-<label for="fullname">Fullname</label>
+<label for="fullname">Full name</label>
 <input type="text" name="fullname" id="fullname" value="<?php echo $fullname; ?>" />
 <label for="email">Email</label>
 <input type="text" name="email" id="email" value="<?php echo $email; ?>" />
-<label for="mobile">Cell Number</label>
+<label for="mobile">Cell number</label>
 <input type="text" name="mobile" id="mobile" value="<?php echo $mobile; ?>" />
 <label for="pass1">Password</label>
 <input type="password" name="pass1" id="pass1" value="<?php echo $pass1; ?>" />
@@ -36,7 +36,7 @@ Flash::Render();
 <?php
 	if (0==$uid) {
 ?>
-<a href="<?php echo Utils::Url("forgot_form.php", array("qz"=>$qz)); ?>">Forgot Password</a>
+<a href="<?php echo Utils::Url("forgot_form.php", array("qz"=>$qz)); ?>">Forgot password</a>
 <a href="<?php echo Utils::Url("login_form.php", array("qz"=>$qz)); ?>">Login</a>
 <input type="hidden" name="stage" value="register" />
 <input type="submit" name="act" value="Register" class="register" />
