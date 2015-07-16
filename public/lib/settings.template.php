@@ -9,4 +9,3 @@ define("PANACEA_USERNAME", "X");
 define("PANACEA_PASSWORD", "X");
 define("BULKSMS_USERNAME", "X");
 define("BULKSMS_PASSWORD", "X");
-define("BULKSMS_MSISDN", "271234567");

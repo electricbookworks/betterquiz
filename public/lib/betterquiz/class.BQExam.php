@@ -40,6 +40,13 @@ class BQExam {
 	}
 
 	/**
+	 * QuizId returns the ID of the quiz for this exam.
+	 */
+	public function QuizId() {
+		return $this->_quizId;
+	}
+
+	/**
 	 * CsvArrayHeader returns the headers for the fields in the CSV output
 	 */
 	public function CsvArrayHeader() {

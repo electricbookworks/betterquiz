@@ -36,9 +36,10 @@ if (FALSE===$q) {
 			name="o<?php echo $q->Id(); ?>" 
 			value="<?php echo $o->Id(); ?>" 
 			class="option-radio" 
+			id="o<?php echo $o->Id(); ?>"
 			<?php if ($oid==$o->Id()) { echo 'checked="checked"'; } ?>
 			/>
-		<div class="option-text"><?php echo $o->Option(); ?></div>
+		<label class="option-text" for="o<?php echo $o->Id(); ?>"><?php echo $o->Option(); ?></label>
 	</div>
 <?php
 	} // end foreach $q->Options()

@@ -12,8 +12,8 @@ $exam->SetSubmit($db, Utils::Param("submit_results", 0));
 
 $redirect = ReturnSite::GetSession();
 if (!$redirect) {
-	echo "We don't have a redirect site: nowhere to go home to.";
-	die();
+	BQExam::ClearSession();
+	Utils::Redirect("done_no_redirect.php", array("qz"=>$exam->QuizId()));
 }
 ReturnSite::ClearSession();
 CssStore::ClearSession();
