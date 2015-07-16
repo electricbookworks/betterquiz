@@ -15,7 +15,7 @@ $exam->SetCompleted($db);
 include("_header.php");
 
 ?>
-<h1>Your Results</h1>
+<h1>Your results</h1>
 <div id="answers">
 <?php
 	foreach ($exam->Answers() as $a) {
@@ -40,7 +40,7 @@ include("_header.php");
 ?>
 </div>
 <div id="score">
-Your Score: <span class="score"><?php echo $exam->Score(); ?> / <?php echo $exam->Total(); ?></span>
+Your score: <span class="score"><?php echo $exam->Score(); ?> / <?php echo $exam->Total(); ?></span>
 <span class="percentage"><?php echo $exam->Percentage(); ?></span>
 </span>
 

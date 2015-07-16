@@ -96,7 +96,7 @@ EOSQL
 		$msg = <<<EOMAIL
 Dear $fullname,
 
-We received a request for a new password on BetterCare.
+We received a request for a new password on Bettercare.
 
 We've set a new password for you: $new
 
@@ -105,13 +105,13 @@ We've set a new password for you: $new
 You can login using this new password during the next hour.
 
 All the best,
-The BetterCare Team
+The Bettercare Team
 EOMAIL
 		;
 		$headers = 'From: no-reply@bettercare.co.za' . "\r\n" .
 		    'Reply-To: no-reply@bettercare.co.za' . "\r\n" .
 		    'X-Mailer: PHP/' . phpversion();
-		mail($email, "BetterCare: Password Reset", $msg, $headers);
+		mail($email, "Bettercare: Password Reset", $msg, $headers);
 		return true;
 	}
 
@@ -121,7 +121,7 @@ EOMAIL
 	 */
 	public static function SMSPassword($uid, $mobile, $new) {
 		$msg = <<<EOSMS
-We've assigned you a new password on BetterCare: $new 
+We've assigned you a new password on Bettercare: $new 
 You can login with this password during the next hour.
 EOSMS
 		;

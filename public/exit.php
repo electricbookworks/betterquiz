@@ -29,7 +29,7 @@ $excludeNav = true;
 include("_header.php");
 ?>
 <div class="exit">
-<p>Are you sure you want to exit? The results of this quiz will be discarded?</p>
+<p>Are you sure you want to exit? The results of this quiz will be discarded.</p>
 <div class="yes"><a href="exit.php?sure=yes">Yes</a></div>
 <div class="no"><a href="<?php echo $src; ?>">No</a></div>
 </div>
