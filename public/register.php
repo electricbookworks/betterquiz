@@ -53,7 +53,7 @@ if (""!=$mobile) {
 	if ($updateStage) {
 		$otherId = BQUser::UserIdForMobile($db, $mobile);
 		if ($otherId && $uid!=$otherId) {
-			$errors->Error("Another user already exists with the mobile number.");
+			$errors->Error("Another user already exists with that cell number.");
 		}
 	}
 }

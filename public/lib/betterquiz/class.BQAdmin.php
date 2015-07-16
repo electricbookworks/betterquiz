@@ -1,7 +1,7 @@
 <?php
 
 /**
- * BQAdmin is a single administartor on the BQ site.
+ * BQAdmin is a single administrator on the BQ site.
  */
 class BQAdmin {
 	protected $_email;

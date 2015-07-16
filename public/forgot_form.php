@@ -15,7 +15,7 @@ Flash::Render();
 <div id="forgot-form">
 <form method="post" action="forgot.php">
 <input type="hidden" name="qz" value="<?php echo $qz; ?>" />
-<label for="email">Email / Cell Number</label>
+<label for="email">Email / Cell number</label>
 <input type="text" name="email" id="email" value="<?php echo $email; ?>" />
 <input type="submit" name="act" value="forgot password" class="forgot-password" />
 <input type="submit" name="act" value="Login / Register" class="login-register" />

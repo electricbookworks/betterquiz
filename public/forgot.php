@@ -32,12 +32,12 @@ if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
 
 $mobile = Utils::FilterMobile($email);
 if (!$mobile) {
-	$errors->Error("Please enter either an email address or a mobile number.");
+	$errors->Error("Please enter either an email address or a cell number.");
 	Utils::Redirect("forgot_form.php", $_REQUEST);
 }
 $uid = BQUser::UserIdForMobile($db, $mobile);
 if (!$uid) {
-	$errors->Error("Sorry, we can't find that mobiel number in our database.");
+	$errors->Error("Sorry, we can't find that cell number in our database.");
 	Utils::Redirect("forgot_form.php", $_REQUEST);
 }
 $new = BQUserForgot::NewPassword($db, $mobile);

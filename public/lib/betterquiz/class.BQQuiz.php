@@ -211,7 +211,7 @@ class BQQuiz {
 	}	
 
 	/**
-	 * FindFirstQuestionId is a convenience method to find the first quesition id
+	 * FindFirstQuestionId is a convenience method to find the first question id
 	 * of a quiz without loading the full BQQuiz class.
 	 * @return int or bool The quiz ID or FALSE if no first question is found.
 	 */

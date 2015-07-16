@@ -28,7 +28,7 @@ include("_nav.php");
 </div>
 
 <table>
-<thead><tr><th>ID</th><th>Fullname</th><th>Mobile</th><th>Email</th><th>Answers</th></tr></thead>
+<thead><tr><th>ID</th><th>Full name</th><th>Mobile</th><th>Email</th><th>Answers</th></tr></thead>
 <tbody>
 <?php
   foreach ($items as $u) {
