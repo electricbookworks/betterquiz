@@ -216,16 +216,37 @@ class BQQuiz {
 	 * @return int or bool The quiz ID or FALSE if no first question is found.
 	 */
 	public static function FindFirstQuestionId($db, $quizId) {
-		$stmt = $db->Prepare("select id from question where quiz_id=? order by question_number asc limit 0,1");
+		$stmt = $db->Prepare(<<<EOSQL
+			select id from question 
+			where quiz_id=? 
+			order by question_number asc limit 0,1
+EOSQL
+		);
 		$stmt->bind_param("i", $quizId);
 		$db->Execute($stmt);
-
-		$id = null;
-
+		$id = false;
 		$stmt->bind_result($id);
 		if (!$stmt->fetch()) {
 			return false;
 		}
+		$stmt->Close();
 		return $id;
-	}	
+	}
+
+	/**
+	 * DoesQuizExist returns TRUE if a quiz exists with the given
+	 * quizId, false otherwise.
+	 */
+	public static function DoesQuizExist($quizId) {
+		$db = Database::Get();
+		$stmt = $db->Prepare("select count(*) from quiz	where id = ?");
+		$stmt->bind_param("i", $quizId);
+		$db->Execute($stmt);
+
+		$count = 0;
+		$stmt->bind_result($count);
+		$stmt->fetch();
+		$stmt->close();
+		return (0<$count);
+	}
 }
