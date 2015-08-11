@@ -1,0 +1,31 @@
+/* Typography */
+body {
+  font-family: "Source Sans Pro", sans-serif;
+  line-height: 140%;
+  font-size: 1.3em;
+}
+input {
+  font-size: 1em;
+  font-family: inherit;
+  letter-spacing: 0.025em;
+  padding: 0.2em;
+  margin: 0 0 1em 0;
+  max-width: 90%;
+}
+input[type="radio"] {
+	margin: 0;
+}
+input[type="submit"] {
+  display: inline-block;
+  background-color: $color-primary;
+  color: white;
+  padding: 0.5em;
+  margin: 0 0 1em 0;
+  @include border-radius(0.2em);
+  text-align: center;
+  text-decoration: none;
+  line-height: 100%;
+  @include single-box-shadow(0.02em, 0.02em, 0.02em, 0.02em, #ccc);
+  max-width: 100%;
+  border: none;
+}

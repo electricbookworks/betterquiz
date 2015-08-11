@@ -2,6 +2,7 @@
 
 include_once("class.BQOption.php");
 
+
 /**
  * A Question in a Quiz.
  */
@@ -47,6 +48,15 @@ class BQQuestion {
 	 */
 	public function Question() {
 		return $this->_question;
+	}
+
+	/**
+	 * Return the question text as HTML. This assumes the question
+	 * text is stored in Markdown, so it uses a Markdown renderer
+	 * to convert the question text into HTML.
+	 */
+	public function QuestionHtml() {
+		return BQMarkdown::render($this->Question());
 	}
 
 	/**

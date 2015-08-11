@@ -21,7 +21,7 @@ include("_header.php");
 	foreach ($exam->Answers() as $a) {
 		?>
 		<div class="answer">
-			<div class="question-text"><?php echo $a->QuestionText(); ?></div>
+			<div class="question-text"><?php echo $a->QuestionHtml(); ?></div>
 			<?php
 			if ($a->IsCorrect()) {
 				?>
@@ -41,7 +41,7 @@ include("_header.php");
 </div>
 <div id="score">
 Your score: <span class="score"><?php echo $exam->Score(); ?> / <?php echo $exam->Total(); ?></span>
-<span class="percentage"><?php echo $exam->Percentage(); ?></span>
+<span class="percentage"><?php echo round($exam->Percentage()); ?></span>
 </span>
 
 <div id="submit">

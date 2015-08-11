@@ -47,6 +47,7 @@ class BulkSMS {
 			return TRUE;
 		}
 		else {
+			echo "ERROR: ".  self::formatted_server_response( $result );
 			throw new Exception(self::formatted_server_response( $result ) );
 		}
 	}

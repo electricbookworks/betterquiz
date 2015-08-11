@@ -83,6 +83,13 @@ EOSQL
 	}
 
 	/**
+	 * Return the option Markdown rendered as HTML.
+	 */
+	public function OptionHtml() {
+		return BQMarkdown::render($this->Option());
+	}
+
+	/**
 	 * Correct returns true if this option is the correct option, false otherwise.
 	 */
 	public function Correct() {

@@ -10,3 +10,5 @@ include_once("class.Errors.php");
 include_once("class.SessionStore.php");
 include_once("class.ReturnSite.php");
 include_once("class.CssStore.php");
+
+include_once("class.BQMarkdown.php");

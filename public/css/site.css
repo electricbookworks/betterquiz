@@ -63,6 +63,51 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   display: block;
 }
 
+/* BetterCare Blue */
+/* Soft red */
+/* Typography */
+/* line 2, ../../src/scss/base/_general.scss */
+body {
+  font-family: "Source Sans Pro", sans-serif;
+  line-height: 140%;
+  font-size: 1.3em;
+}
+
+/* line 7, ../../src/scss/base/_general.scss */
+input {
+  font-size: 1em;
+  font-family: inherit;
+  letter-spacing: 0.025em;
+  padding: 0.2em;
+  margin: 0 0 1em 0;
+  max-width: 90%;
+}
+
+/* line 15, ../../src/scss/base/_general.scss */
+input[type="radio"] {
+  margin: 0;
+}
+
+/* line 18, ../../src/scss/base/_general.scss */
+input[type="submit"] {
+  display: inline-block;
+  background-color: #4f89d2;
+  color: white;
+  padding: 0.5em;
+  margin: 0 0 1em 0;
+  -moz-border-radius: 0.2em;
+  -webkit-border-radius: 0.2em;
+  border-radius: 0.2em;
+  text-align: center;
+  text-decoration: none;
+  line-height: 100%;
+  -moz-box-shadow: 0.02em 0.02em 0.02em 0.02em #ccc;
+  -webkit-box-shadow: 0.02em 0.02em 0.02em 0.02em #ccc;
+  box-shadow: 0.02em 0.02em 0.02em 0.02em #ccc;
+  max-width: 100%;
+  border: none;
+}
+
 /* line 1, ../../src/scss/layout/_workspace.scss */
 #workspace {
   padding: 1rem;
@@ -86,11 +131,73 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
 
 /* line 2, ../../src/scss/components/_questions.scss */
 .question .question-text {
-  font-size: 1.2em;
+  font-size: inherit;
+  clear: both;
+  padding: 1em 0 0.5em 0;
 }
-/* line 10, ../../src/scss/components/_questions.scss */
-.question .options .option .option-text {
+/* line 7, ../../src/scss/components/_questions.scss */
+.question .question-navigate {
+  float: left;
+  margin: 0 1em 0 0;
+}
+/* line 11, ../../src/scss/components/_questions.scss */
+.question .options {
+  margin: 0 0 1em 0;
+}
+/* line 14, ../../src/scss/components/_questions.scss */
+.question .options .option input[type="radio"] {
   display: inline-block;
+}
+/* line 17, ../../src/scss/components/_questions.scss */
+.question .options .option .option-text {
+  display: inline;
+}
+
+/* line 24, ../../src/scss/components/_questions.scss */
+.yes, .no {
+  display: inline-block;
+  margin: 1em 1em 0 0;
+}
+
+/* line 28, ../../src/scss/components/_questions.scss */
+.yes a, .no a, .question-navigate a {
+  display: inline-block;
+  background-color: #4f89d2;
+  color: white;
+  padding: 0.5em;
+  margin: 0 0 1em 0;
+  border-radius: 0.2em;
+  text-align: center;
+  text-decoration: none;
+  line-height: 100%;
+  box-shadow: 0.02em 0.02em 0.02em 0.02em #ccc;
+  max-width: 100%;
+}
+
+/* line 41, ../../src/scss/components/_questions.scss */
+.no a {
+  background-color: #ff6644;
+  /* Soft red */
+}
+
+/* line 44, ../../src/scss/components/_questions.scss */
+.question-navigate a {
+  background-color: grey;
+}
+
+/* line 47, ../../src/scss/components/_questions.scss */
+a {
+  color: #4f89d2;
+  text-decoration: none;
+}
+
+/* Navigation */
+/* line 53, ../../src/scss/components/_questions.scss */
+.link.exit, .link.profile {
+  float: right;
+  display: inline-block;
+  margin: 0 1em 0 0;
+  text-transform: capitalize;
 }
 
 /* line 2, ../../src/scss/components/_login-register.scss */

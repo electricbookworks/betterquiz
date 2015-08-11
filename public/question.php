@@ -24,7 +24,7 @@ if (FALSE===$q) {
 <div class="question">
 <form method="post" action="post_answer.php">
 <input type="hidden" name="q" value="<?php echo $qid; ?>" />
-<div class="question-text"><?php echo $q->Question(); ?></div>
+<div class="question-text"><?php echo $q->QuestionHtml(); ?></div>
 <?php
 	Flash::Render();
 ?>
@@ -39,7 +39,7 @@ if (FALSE===$q) {
 			id="o<?php echo $o->Id(); ?>"
 			<?php if ($oid==$o->Id()) { echo 'checked="checked"'; } ?>
 			/>
-		<label class="option-text" for="o<?php echo $o->Id(); ?>"><?php echo $o->Option(); ?></label>
+		<label class="option-text" for="o<?php echo $o->Id(); ?>"><?php echo $o->OptionHtml(); ?></label>
 	</div>
 <?php
 	} // end foreach $q->Options()

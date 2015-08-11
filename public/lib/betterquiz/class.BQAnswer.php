@@ -26,6 +26,14 @@ class BQAnswer {
 	public function QuestionText() {
 		return $this->_question->Question();
 	}
+
+	/**
+	 * Returns the HTML for the question in Markdown.
+	 */
+	public function QuestionHtml() {
+		return $this->_question->QuestionHtml();
+	}
+
 	/**
 	 * Returns the option that was chosen.
 	 */
