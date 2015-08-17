@@ -25,6 +25,9 @@ class BQQuiz {
 		$this->_meta[strtolower(bqf_trim($k))] = bqf_trim($v);
 	}
 
+	/**
+	 * BQFString outputs the Quiz in BQF format.
+	 */
 	public function BQFString() {
 		$out = array();
 		foreach ($this->_meta as $k=>$v) {

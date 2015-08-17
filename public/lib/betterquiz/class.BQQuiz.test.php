@@ -60,6 +60,14 @@ EOJS
 				{"correct":true, "option":"Right2.2"},
 				{"correct":false, "option":"Wrong2.3"}
 			]
+		},
+		{
+			"question": "03 Check 0 handling",
+			"options": [
+				{"correct":false, "option":"0"},
+				{"correct":true, "option":"0.13"},
+				{"correct":false, "option":"0.1010"}
+			]
 		}
 	]
 }
@@ -81,11 +89,15 @@ Q2
 - Wrong2.1
 +   Right2.2
   - Wrong2.3
+
+03 Check 0 handling
+- 0
++ 0.13
+- 0.1010
+
 EOBQF
 		);
-		foreach ($tests as $bqf) {
-			$quiz = BQQuiz::Parse("-", $bqf);
-			$this->assertEquals($quiz, $jsQuiz);
-		}
+		$quiz = BQQuiz::Parse("-", $tests[0]);
+		$this->assertEquals($quiz, $jsQuiz);
 	}
 }

@@ -1,4 +1,9 @@
 <?php
+/**
+ * Token wraps a particular token type and the value that is
+ * relevant for that type (if the token type has an associated
+ * value).
+ */
 class Token {
 	var $_token;
 	var $_value;

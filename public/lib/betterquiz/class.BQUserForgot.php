@@ -87,7 +87,7 @@ EOSQL
 	 * EmailPassword emails the new password to the user with the
 	 * given userId.
 	 */
-	public static function EmailPassword($email, $new) {
+	public static function EmailPassword($uid, $email, $new) {
 		$user = BQUser::LoadUserByEmailOrMobile(false, $email);
 		if (!$user) {
 			return FALSE;
@@ -111,7 +111,12 @@ EOMAIL
 		$headers = 'From: no-reply@bettercare.co.za' . "\r\n" .
 		    'Reply-To: no-reply@bettercare.co.za' . "\r\n" .
 		    'X-Mailer: PHP/' . phpversion();
-		mail($email, "Bettercare: Password Reset", $msg, $headers);
+		$send = mail($email, "Bettercare: Password Reset", $msg, $headers);
+		if (!$send) {
+			error_log("Failed to send email to $email: " . error_get_last());
+		} else {
+			error_log("We think emailing to $email worked...");
+		}
 		return true;
 	}
 

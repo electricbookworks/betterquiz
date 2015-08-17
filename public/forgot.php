@@ -25,6 +25,7 @@ if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
 		Utils::Redirect("forgot_form.php", $_REQUEST);
 	}
 	// @TODO Send email about forgotten password
+	error_log("About to call BQUserForget::EmailPassword($uid, $email, $new)");
 	BQUserForgot::EmailPassword($uid, $email, $new);
 	new Flash("We've emailed you a new password.");
 	Utils::Redirect("login_form.php", $_REQUEST);

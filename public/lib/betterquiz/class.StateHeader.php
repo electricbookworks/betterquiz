@@ -12,15 +12,19 @@ class StateHeader {
 		$stream->ReadUntilAny(":\n");
 		$c = $stream->Peek();
 		// EOF
-		switch ($c) {
-			case FALSE:
-				$line = $stream->TrimString();
-				if (0<bqf_strlen($line)) {
-					$stream->Error("Unexpected EOF with header line");
-					return FALSE;
-				}
-				$stream->EmitEOF();
+		if (FALSE===$c) {
+			$line = $stream->TrimString();
+			if (0<bqf_strlen($line)) {
+				$stream->Error("Unexpected EOF with header line");
 				return FALSE;
+			}
+			$stream->EmitEOF();
+			return FALSE;			
+		}
+		switch ($c) {
+			// FALSE case handled separately above to handle ===
+			// comparison
+			//case FALSE:
 			case "\n":
 				$line = $stream->TrimString();
 				if ((""==$line) || ("---"==$line)) {

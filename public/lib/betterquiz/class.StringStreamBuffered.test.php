@@ -11,8 +11,9 @@ class StringStreamBufferedTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function testSkipWs() {
-		$stream = new StringStreamBuffered("-","This is a test\nand a second line");
-		$expect = array("This","is","a","test","and","a","second","line");
+		$stream = new StringStreamBuffered("-",
+			"This is a test\nand a second line\n0");
+		$expect = array("This","is","a","test","and","a","second","line","0");
 		foreach ($expect as $e) {
 			$stream->SkipWs();
 			$stream->ReadUntilWs();
@@ -108,7 +109,9 @@ class StringStreamBufferedTest extends \PHPUnit_Framework_TestCase {
 		$tests = array(
 			array("     \nt", TRUE, "t"),
 			array("\n", TRUE, FALSE),
-			array("  D  \n-", FALSE, "D")
+			array("  D  \n-", FALSE, "D"),
+			array(" fred", FALSE, "f"),
+			array("0\n", FALSE, "0")
 		);
 		foreach ($tests as $test) {
 			$stream = new StringStreamBuffered("-", $test[0]);

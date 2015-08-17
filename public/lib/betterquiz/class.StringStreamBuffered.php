@@ -120,7 +120,7 @@ class StringStreamBuffered {
 	public function SkipWsToEOL() {
 		while (true) {
 			$c = $this->Read();
-			if ((FALSE==$c) || ("\n"==$c)) {
+			if ((FALSE===$c) || ("\n"==$c)) {
 				return TRUE;
 			}
 			if (!bqf_isspace($c)) {
@@ -145,9 +145,11 @@ class StringStreamBuffered {
 		$this->ReadWs();
 		$c = $this->Read();
 
+		if (FALSE===$c) {
+			return;
+		}
 		switch ($c) {
-			case FALSE:
-				return;
+			// FALSE handled in separate if above for === comparison
 			case "\"":
 			case "'":
 			case "`":
@@ -173,9 +175,13 @@ class StringStreamBuffered {
 	public function ReadXMLTagOrEOLOrString() {
 		$this->ReadWs();
 		$c = $this->Read();
+		if (FALSE===$c) {
+			return;
+		}
 		switch ($c) {
-			case FALSE:
-				return;
+			// FALSE handled in separate IF above to permit === comparison
+			// case FALSE:
+			// 	return;
 			case "<";
 				$this->readOpenTag();
 				break;
@@ -200,9 +206,14 @@ class StringStreamBuffered {
 	public function ReadContentToEOL() {
 		$this->ReadWs();
 		$c = $this->Read();
+		// Catch this for LOGIC match, otherwise PHP matches '0' to FALSE
+		if (FALSE===$c) {
+			return true;
+		}
 		switch ($c) {
-			case FALSE:
-				return TRUE;
+			// Catch ABOVE with === match
+			// case FALSE:
+			// 	return TRUE;
 			case "<";
 				$this->readOpenTag();
 				return $this->SkipWsToEOL();
@@ -227,9 +238,12 @@ class StringStreamBuffered {
 		$tag = $this->TrimString();
 		$this->readAttributes();
 		$c = $this->Peek();
+		if (FALSE===$c) {
+				throw new Exception("Unexpected EOF encountered while reading tag $tag");			
+		}
 		switch ($c) {
-			case FALSE:
-				throw new Exception("Unexpected EOF encountered while reading tag $tag");
+			// FALSE handled in separate IF above for === comparisons
+			// case FALSE:
 			case "/":
 				$this->Read();
 				$c = $this->Read();
@@ -247,9 +261,12 @@ class StringStreamBuffered {
 			$this->ReadUntilAny("<");
 			$this->Read();	// Read the opening <
 			$c = $this->Read();	// Next character
+			if (FALSE===$c) {
+				throw new Exception("Unexpected EOF encountered while reading tag $tag");
+			}
 			switch ($c) {
-				case FALSE:
-					throw new Exception("Unexpected EOF encountered while reading tag $tag");
+				// FALSE handled in separate IF above to allow === comparison
+				// case FALSE:
 				case "/":
 					// We're not bothering to check that the tag is closed properly
 					// although we could implement a 'readExact("/$tag")' for the Stream
@@ -265,14 +282,17 @@ class StringStreamBuffered {
 		}
 	}
 
-
 	public function readAttributes() {
 		$this->ReadWs();
 		$c = $this->Peek();
-		switch ($c) {
-		case FALSE:
+		if (FALSE===$c) {
 			throw new Exception("Unexpected EOF while trying to read attribute at line " . 
-					$this->Line() . ", col ", $this->Col());
+					$this->Line() . ", col ", $this->Col());			
+		}
+		switch ($c) {
+		// FALSE handled in separate IF above to allow === comparison
+		// case FALSE:
+
 		case "/":
 			// fallthrough
 		case ">":

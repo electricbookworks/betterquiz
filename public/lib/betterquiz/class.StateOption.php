@@ -15,10 +15,15 @@ class StateOption {
 		}
 
 		$c = $stream->Read();
+		if (FALSE===$stream) {
+			$stream->EmitEOF();
+			return FALSE;
+		}
 		switch ($c) {
-			case FALSE:
-				$stream->EmitEOF();
-				return FALSE;
+			// Handle FALSE case separately above to permit === comparison
+			// case FALSE:
+			// 	$stream->EmitEOF();
+			// 	return FALSE;
 			case ".":
 				// fallthrough
 			case "-":
