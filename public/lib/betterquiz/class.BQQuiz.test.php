@@ -40,6 +40,83 @@ EOJS
 		}
 	}
 
+	public function testZeroHandling() {
+		$tests = array(
+			array(<<<EOJS
+{
+	"meta": {"01":"0","0.2":"0.2","100":"100"},
+	"questions": [
+		{"question":"100% oxygen may damage the infant and therefore:",
+		 "options": [
+			 {"correct":false,"option":"Should never be given to any infant"},
+			 {"correct":false, "option":"Should not be given for more than 24 hours"},
+			 {"correct":true, "option":"Should only be given if a lower concentration of oxygen fails to correct central cyanosis"},
+			 {"correct":false, "option":"Should never be given to a preterm infant"}
+		 ]
+		}
+	]
+}
+EOJS
+, <<<EOBQF
+01: 0
+0.2: 0.2
+100: 100
+
+100% oxygen may damage the infant and therefore:
+- Should never be given to any infant
+- Should not be given for more than 24 hours
++ Should only be given if a lower concentration of oxygen fails to correct central cyanosis
+- Should never be given to a preterm infant
+EOBQF
+				), array(
+<<<EOJS
+{
+	"meta": { "title":"Testing error when answer option is 0" },
+	"questions": [
+		{ "question": 
+
+			"What is the normal total serum bilirubin concentration (TSB) in cord blood?",
+		  "options": [
+			{"correct":false,"option": "0 this zero creates a line break. On its own as an option, it throws an error"},
+			{"correct":true, "option":"Less than 35 µmol/l"},
+			{"correct":false, "option":"35–55 µmol/l"},
+			{"correct":false, "option":"More than 55 µmol/l"}
+		  ]
+		},
+		{ "question": "What is the normal total serum bilirubin concentration (TSB) in cord blood?",
+		  "options": [
+			{"correct":false, "option":"0 µmol/l"},
+			{"correct":true, "option":"Less than 35 µmol/l"},
+			{"correct":false,"option":"35–55 µmol/l"},
+			{"correct":false,"option":"More than 55 µmol/l"}
+		]}
+	]
+}
+EOJS
+, <<<EOBQF
+title: Testing error when answer option is 0
+
+What is the normal total serum bilirubin concentration (TSB) in cord blood?
+-   0 this zero creates a line break. On its own as an option, it throws an error
++   Less than 35 µmol/l
+-   35–55 µmol/l
+-   More than 55 µmol/l
+
+What is the normal total serum bilirubin concentration (TSB) in cord blood?
+-   0 µmol/l
++   Less than 35 µmol/l
+-   35–55 µmol/l
+-   More than 55 µmol/l
+EOBQF
+));
+		foreach ($tests as $t) {
+			$jsQuiz = BQQuiz::ParseJson($t[0]);
+			$quiz = BQQuiz::Parse("-", $t[1]);
+			$this->assertEquals($quiz, $jsQuiz);
+		}
+
+	}
+
 	public function testBQFVariations() {
 		$jsQuiz = BQQuiz::ParseJSON(<<<EOJS
 {	

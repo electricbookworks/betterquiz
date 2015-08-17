@@ -105,8 +105,8 @@ class BQQuiz {
 	public static function ParseJSON($js) {
 		$quiz = new BQQuiz();
 		$js = json_decode($js);		
-		if (FALSE===$js) {
-			throw new Exception("Failed to parse JSON");
+		if ((FALSE===$js) || (null===$js)) {
+			throw new Exception("Failed to parse JSON: " . json_last_error_msg());
 		}
 		foreach ($js->meta as $k=>$v) {
 			$quiz->AddMeta($k, $v);
