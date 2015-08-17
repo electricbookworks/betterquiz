@@ -1,0 +1,25 @@
+title: Testing error when answer option is 0
+
+What is the normal total serum bilirubin concentration (TSB) in cord blood?
+-   0 this zero creates a line break. On its own as an option, it throws an error
++   Less than 35 µmol/l
+-   35–55 µmol/l
+-   More than 55 µmol/l
+
+What is the normal total serum bilirubin concentration (TSB) in cord blood?
+-   0 µmol/l
++   Less than 35 µmol/l
+-   35–55 µmol/l
+-   More than 55 µmol/l
+
+What is a safe concentration of inspired oxygen?
+-   0.40 (i.e. 40%)
+-   0.25 (i.e. 25%)
+-   0.10 (i.e. 10%)
++   Any FiO₂ that gives a normal partial pressure or normal saturation of oxygen in the blood
+
+100% oxygen may damage the infant and therefore:
+- Should never be given to any infant
+- Should not be given for more than 24 hours
++ Should only be given if a lower concentration of oxygen fails to correct central cyanosis
+- Should never be given to a preterm infant
