@@ -211,6 +211,10 @@ class BQExam {
 			global $db;
 			$thedb = $db;
 		}
+		if (false===$examId) {
+			error_log(__FILE__ . ":" . __LINE__ . " : SetExamAnswer(_, $examId, $optionId) : examId is invalid");
+			return;
+		}
 
 		// Remove any existing answer to this question
 		$stmt = $thedb->Prepare(<<<EOSQL

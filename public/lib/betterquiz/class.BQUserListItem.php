@@ -31,7 +31,7 @@ class BQUserListItem {
 
 	public static function Find($params) {
 		$db = Database::Get();
-		$search = " (merge_with is null) ";
+		$search = " ((merge_with is null) or (0 = merge_with)) ";
 		if (array_key_exists("search", $params) && (0<strlen($params['search']))) {
 			$s = $db->Safe($params['search']);
 			$search .= " and (fullname like '%$s%' or email like '%$s%' or mobile like '%$s%')";
@@ -46,7 +46,7 @@ class BQUserListItem {
 		$countStmt->Close();
 
 		$arr = array();
-		$stmt = $db->Prepare(<<<EOSQL
+		$stmt = $db->Prepare($sql = <<<EOSQL
 	select u.id, u.fullname, u.mobile, u.email, 
 		(select count(*) from exam where user_id=u.id)
 		from user u 
