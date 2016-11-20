@@ -18,6 +18,7 @@ class PageLink
     @el.addEventListener('click', (evt)=>
       evt.stopPropagation()
       evt.preventDefault()
+      console.log('Clicked page ', n)
       if not current and enabled
         evt = new CustomEvent('bq-page', { 'bubbles':true, 'cancelable': true, 'detail' : { 'n' : n } } )
         @el.dispatchEvent(evt)
@@ -31,7 +32,7 @@ class Paginator
 
     @pagesToShow = parseInt(@paginator.getAttribute("pages-to-show"))
     @current = parseInt(@paginator.getAttribute("current"))
-    console.log?("In Paginator::setup - @current = #{@current}")
+    # console.log?("In Paginator::setup - @current = #{@current}")
 
     @totalItems = parseInt(@paginator.getAttribute("total-items"))
     @itemsPerPage = parseInt(@paginator.getAttribute("items-per-page")) 
@@ -54,9 +55,10 @@ class Paginator
   calculatePages: (current, pagesToShow, totalItems, itemsPerPage)->
     console.log(arguments)
     minPage = Math.max(0, current  - Math.floor(pagesToShow/2.0))
-    console.log("minPage = #{minPage}")
-    lastPage = Math.ceil(totalItems / (1.0*itemsPerPage)-1);
-    console.log("lastPage = #{lastPage}")
+    # console.log?("minPage = #{minPage}")
+    lastPage = Math.ceil(totalItems / (1.0*itemsPerPage)-1)
+    # lastPage = 30
+    # console.log?("lastPage = #{lastPage}")
     if ((minPage + pagesToShow) > lastPage)
       minPage = Math.max(0, lastPage - pagesToShow)
     maxPage = Math.min(minPage + pagesToShow, lastPage)
@@ -93,20 +95,23 @@ BqPaginatorElementPrototype.createdCallback = ()->
   templateContent = importDoc.querySelector('#bq-paginator-template').content
   shimShadowStyles(templateContent.querySelectorAll('style'), 'bq-paginator')
 
-  @shadowRoot = @createShadowRoot()
+  if 'function' == typeof @attachShadowRoot
+    @shadowRoot = @attachShadowRoot({mode:'open'})
+  else
+    @shadowRoot = @createShadowRoot()
+
   @el = templateContent.cloneNode(true)
   @$ = {}
   for e in @el.querySelectorAll('[data-set]')
       @$[e.getAttribute("data-set")] = e
   @paginator = new Paginator(@$.ul, this)
   @shadowRoot.appendChild(@el)
-  console.log("Completed bq-paginator createdCallback")
+  # console.log("Completed bq-paginator createdCallback")
   return
 
 
 attrs = {
   'current': (oldVal, newVal)->
-    console.log("this = ", this)
     @paginator.setup()
 }
 

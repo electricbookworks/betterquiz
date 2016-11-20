@@ -76,7 +76,7 @@ class Database {
 	}
 
 	/**
-	 * Execute the given query, throwing ane exception on error.
+	 * Execute the given query, throwing an exception on error.
 	 */
 	public function Query($sql) {
 		$res = $this->_db->query($sql);

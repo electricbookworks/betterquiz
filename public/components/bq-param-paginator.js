@@ -84,7 +84,7 @@
   BqParamPaginatorElementPrototype = Object.create(window.HTMLElement.prototype);
 
   BqParamPaginatorElementPrototype.createdCallback = function() {
-    var attaches, fn, i, importDoc, j, ref, ref1, ref2, ref3, templateContent;
+    var attaches, f, fn, i, importDoc, j, ref, ref1, ref2, ref3, templateContent;
     if ((ref = window.HTMLElement) != null) {
       if ((ref1 = ref.prototype) != null) {
         if ((ref2 = ref1.createdCallback) != null) {
@@ -97,7 +97,13 @@
     importDoc = currentScript.ownerDocument;
     templateContent = importDoc.querySelector('#bq-param-paginator-template').content;
     shimShadowStyles(templateContent.querySelectorAll('style'), 'bq-param-paginator');
-    this.shadowRoot = this.createShadowRoot();
+    if ('function' === typeof this.attachShadowRoot) {
+      this.shadowRoot = this.attachShadowRoot({
+        mode: 'open'
+      });
+    } else {
+      this.shadowRoot = this.createShadowRoot();
+    }
     this.el = templateContent.cloneNode(true);
     this.$ = {};
     attaches = this.el.querySelectorAll('[data-set]');
@@ -114,22 +120,30 @@
     this.qs = new MyUrl();
     this.param = this.getAttribute("parameter");
     this.paginator = document.getElementById(this.getAttribute('paginator'));
-    document.addEventListener('readystatechange', (function(_this) {
+    f = (function(_this) {
       return function() {
         var pg;
         if ('complete' !== document.readyState) {
-          return;
+          return false;
         }
         if (_this.qs.has(_this.param)) {
           pg = parseInt(_this.qs.get(_this.param));
           _this.paginator.setAttribute('current', pg);
         }
-        return _this.paginator.addEventListener('bq-page', function(evt) {
+        _this.paginator.addEventListener('bq-page', function(evt) {
           _this.qs.set(_this.param, evt.detail.n);
           return window.location = _this.qs.url();
         });
+        return true;
       };
-    })(this));
+    })(this);
+    if (!f()) {
+      document.addEventListener('readystatechange', (function(_this) {
+        return function() {
+          return f();
+        };
+      })(this));
+    }
   };
 
   BqParamPaginatorElementPrototype.attributeChangedCallback = function(attr, oldVal, newVal) {

@@ -8,7 +8,7 @@ $itemsPerPage = 25;
 $title = Utils::Param("title", "");
 $p = array(
 	"limit_from" => ($pg * $itemsPerPage),
-	"limit_to" => (($pg+1) * $itemsPerPage),
+	"limit_to" => ($itemsPerPage),
 	"title" => $title,
 );
 list ($itemsTotal, $items) = BQQuizList::Find($p);

@@ -8,7 +8,7 @@
 			<li class="has-dropdown">
 				<a href="#"><?php echo $user->Email; ?></a>
 				<ul class="dropdown">
-					<li><a href="#" id="persona" data-user-email="<?php echo $user->Email; ?>">Logout</a></li>
+					<li><a href="logout.php">Logout</a></li>
 				</ul>
 			</li>
 		</ul> 

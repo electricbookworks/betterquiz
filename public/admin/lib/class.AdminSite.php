@@ -9,6 +9,7 @@ class AdminSite extends Site {
 		parent::__construct();
 		$this->AddScripts(array(
 			'/bower_components/platform/platform.js',
+			'/bower_components/webcomponentsjs/webcomponents.min.js',
 			'/bower_components/jquery/dist/jquery.js',
 			'/bower_components/underscore/underscore.js',
 			'/bower_components/modernizr/modernizr.js',
@@ -19,7 +20,6 @@ class AdminSite extends Site {
 			'/bower_components/hasher/dist/js/hasher.js',
 			'/bower_components/messageformat/messageformat.js',
 			'/bower_components/dropzone/dist/dropzone.js',
-			'https://login.persona.org/include.js',
 			'/js/admin.js',
 			// '/admin/jsonrpc.php'
 			));

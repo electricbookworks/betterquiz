@@ -7,7 +7,7 @@ $pg = Utils::Param("pg", 0);
 $itemsPerPage = 25;
 $p = array(
 	"limit_from" => ($pg * $itemsPerPage),
-	"limit_to" => (($pg+1) * $itemsPerPage),
+	"limit_to" => ($itemsPerPage),
 );
 list ($itemsTotal, $items) = BQAdmin::Find($p);
 

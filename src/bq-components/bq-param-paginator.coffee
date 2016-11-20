@@ -46,7 +46,11 @@ BqParamPaginatorElementPrototype.createdCallback = ()->
   templateContent = importDoc.querySelector('#bq-param-paginator-template').content
   shimShadowStyles(templateContent.querySelectorAll('style'), 'bq-param-paginator')
 
-  @shadowRoot = @createShadowRoot()
+  if 'function' == typeof @attachShadowRoot
+    @shadowRoot = @attachShadowRoot({mode:'open'})
+  else
+    @shadowRoot = @createShadowRoot()
+
   @el = templateContent.cloneNode(true)
   @$ = {}
   attaches = @el.querySelectorAll('[data-set]')
@@ -60,20 +64,27 @@ BqParamPaginatorElementPrototype.createdCallback = ()->
   @param = @getAttribute("parameter")
   @paginator = document.getElementById(@getAttribute('paginator'))
 
-  document.addEventListener('readystatechange', ()=>
+  f = ()=>
     if 'complete'!=document.readyState
-      return
+      return false
+    # console.log('bq-param-paginator:: readystatechange : readyState=' + document.readyState)
     if @qs.has(@param)
       pg = parseInt(@qs.get(@param))
       @paginator.setAttribute('current', pg)
 
     @paginator.addEventListener('bq-page', (evt)=>
+      # console.log('bq-param-paginator - page changed: ' , evt.detail.n)
       @qs.set(@param, evt.detail.n)
+      # console.log('bq-param-paginator going to url: ' , @qs.url())
       window.location = @qs.url()
     )
-  )
+    return true
 
-  # @shadowRoot.appendChild(@el)
+  if !f()
+    document.addEventListener('readystatechange', ()=>
+      f()
+    )
+  # console.log('created bq-param-paginator createCallback exiting')
   return
 
 BqParamPaginatorElementPrototype.attributeChangedCallback = (attr, oldVal, newVal)->

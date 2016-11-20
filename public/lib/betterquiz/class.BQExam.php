@@ -147,6 +147,9 @@ class BQExam {
 	}
 
 	public function Percentage() {
+		if (0==$this->Total()) {
+			return 0;
+		}
 		return round($this->Score() * 100.0) / ($this->Total() * 1.0);
 	}
 

@@ -3,22 +3,21 @@ include_once("include.php");
 AdminUser::Clear();
 $site = new AdminSite();
 
-if (isset($_POST['email'])) {
-	$email = $_POST['email'];
-	$password = $_POST['password'];	
-
-	$user = AdminUser::Assert($email, $password);
-	if ($user) {
-		$user->Save();
-		Utils::Redirect("index.php");	
+$error = false;
+if ("POST"==$_SERVER["REQUEST_METHOD"]) {
+	$email = $_POST["email"];
+	$res = AdminUser::GeneratePasswordResetRequest($email);
+	if (!ErrorMessage::IsError($res)) {
+		new Flash("A password reset link has been sent to $email. Please check your email.");
+		header("Location: login.php");
+		die();
 	}
-} else {
-	$email = "";
-	$test = "";
-	$password = "";
+	$error = $res->Message();
 }
 
 include("_header.php");
+
+$email = isset($_POST['email']) ? $_POST['email'] : '';
 
 ?>
 <nav class="top-bar" data-topbar role="navigation">
@@ -31,20 +30,20 @@ include("_header.php");
 <div class="row">
 <div class="small-12 columns">
 <?php
-$err = Utils::Param("err", false);
+$err = $error ? $error : Utils::Param("err", false);
 if ($err) {
 	echo '<div class="alert-box alert">' . $err . '</div>';
 }
-Flash::Render();
 ?>
-<form method="post" action="login.php">
+<form method="post" action="admin-forgot-password.php">
 <label for="email">Email 
 <input type="email" name="email" value="<?php echo $email; ?>" /></label>
-<label for="password">Password
-<input type="password" name="password" value="" /></label>
-<input type="submit" class="button" value="Login" />
+
+<input type="submit" class="button" value="Request Password Reset" />
 </form>
-<a href="admin-forgot-password.php">Forgot password</a>
+<div>
+<a href="login.php">Back to Login</a>
+</div>
 </div></div>
 <?php
 include("_footer.php");

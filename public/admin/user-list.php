@@ -8,7 +8,7 @@ $itemsPerPage = 25;
 $search = Utils::Param("search", "");
 $p = array(
 	"limit_from" => ($pg * $itemsPerPage),
-	"limit_to" => (($pg+1) * $itemsPerPage),
+	"limit_to" => ($itemsPerPage),
 	"search" => $search,
 );
 list ($itemsTotal, $items) = BQUserListItem::Find($p);

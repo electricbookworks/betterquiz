@@ -26,7 +26,7 @@ class BQAdmin {
 	public static function Find($params) {
 		$db = Database::Get();
 		$stmt = $db->Prepare(<<<EOSQL
-			select count(*) from admins
+			select count(*) from user where is_admin=1
 EOSQL
 		);
 		$db->Execute($stmt);
@@ -38,7 +38,9 @@ EOSQL
 		$from = $params["limit_from"];
 		$to = $params["limit_to"];
 		$stmt = $db->Prepare(<<<EOSQL
-			select email from admins order by email
+			select email from user
+			where is_admin=1
+			 order by email
 			limit $from, $to
 EOSQL
 		);
@@ -61,8 +63,8 @@ EOSQL
 	public static function IsAdmin($email) {
 		$db = Database::Get();
 		$stmt = $db->Prepare(<<<EOSQL
-			select email from admins
-			where email=?
+			select email from user
+			where email=? and is_admin=1
 EOSQL
 		);
 		$stmt->bind_param("s", $email);
@@ -78,7 +80,7 @@ EOSQL
 	public static function AdminsList() {
 		$db = Database::Get();
 		$stmt = $db->Prepare(<<<EOSQL
-			select email from admins order by email
+			select email from user whre is_admin=1 order by email
 EOSQL
 		);
 		$db->Execute($stmt);
@@ -97,7 +99,9 @@ EOSQL
 	public static function Delete($email) {
 		$db = Database::Get();
 		$stmt = $db->Prepare(<<<EOSQL
-			delete from admins where email=?
+			update user
+			set is_admin=0 
+			where email=?
 EOSQL
 		);
 		$stmt->bind_param("s", $email);
@@ -110,12 +114,35 @@ EOSQL
 	public static function Create($email) {
 		$db = Database::Get();
 		$stmt = $db->Prepare(<<<EOSQL
-			insert into admins (email) values (?)
+			select id from user
+			where email=?
 EOSQL
 		);
-		$stmt->bind_param("s", $email);
+		$stmt->bind_param('s', $email);
 		$db->Execute($stmt);
+		$id = FALSE;
+		$stmt->bind_result($id);
+		$stmt->fetch();
 		$stmt->close();
+		if (!$res) {
+			$stmt = $db->Prepare(<<<EOSQL
+				insert into user(email, is_admin)
+				values (?, 1)
+EOSQL
+			);
+			$stmt->bind_param("s", $email);
+			$db->Execute($stmt);
+			$stmt->close();
+		} else {
+			$stmt = $db->Prepare(<<<EOSQL
+				update user set is_admin=1
+				where email=?
+EOSQL
+			);
+			$stmt->bind_param('s', $email);
+			$db->Execute($stmt);
+			$stmt->close();
+		}
 	}
 
 }

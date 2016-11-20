@@ -20,6 +20,7 @@
         return function(evt) {
           evt.stopPropagation();
           evt.preventDefault();
+          console.log('Clicked page ', n);
           if (!current && enabled) {
             evt = new CustomEvent('bq-page', {
               'bubbles': true,
@@ -52,9 +53,6 @@
       }
       this.pagesToShow = parseInt(this.paginator.getAttribute("pages-to-show"));
       this.current = parseInt(this.paginator.getAttribute("current"));
-      if (typeof console.log === "function") {
-        console.log("In Paginator::setup - @current = " + this.current);
-      }
       this.totalItems = parseInt(this.paginator.getAttribute("total-items"));
       this.itemsPerPage = parseInt(this.paginator.getAttribute("items-per-page"));
       ref = this.calculatePages(this.current, this.pagesToShow, this.totalItems, this.itemsPerPage), minPage = ref[0], maxPage = ref[1], lastPage = ref[2];
@@ -75,9 +73,7 @@
       var lastPage, maxPage, minPage;
       console.log(arguments);
       minPage = Math.max(0, current - Math.floor(pagesToShow / 2.0));
-      console.log("minPage = " + minPage);
       lastPage = Math.ceil(totalItems / (1.0 * itemsPerPage) - 1);
-      console.log("lastPage = " + lastPage);
       if ((minPage + pagesToShow) > lastPage) {
         minPage = Math.max(0, lastPage - pagesToShow);
       }
@@ -124,7 +120,13 @@
     importDoc = currentScript.ownerDocument;
     templateContent = importDoc.querySelector('#bq-paginator-template').content;
     shimShadowStyles(templateContent.querySelectorAll('style'), 'bq-paginator');
-    this.shadowRoot = this.createShadowRoot();
+    if ('function' === typeof this.attachShadowRoot) {
+      this.shadowRoot = this.attachShadowRoot({
+        mode: 'open'
+      });
+    } else {
+      this.shadowRoot = this.createShadowRoot();
+    }
     this.el = templateContent.cloneNode(true);
     this.$ = {};
     ref3 = this.el.querySelectorAll('[data-set]');
@@ -134,12 +136,10 @@
     }
     this.paginator = new Paginator(this.$.ul, this);
     this.shadowRoot.appendChild(this.el);
-    console.log("Completed bq-paginator createdCallback");
   };
 
   attrs = {
     'current': function(oldVal, newVal) {
-      console.log("this = ", this);
       return this.paginator.setup();
     }
   };
@@ -256,7 +256,7 @@
   BqParamPaginatorElementPrototype = Object.create(window.HTMLElement.prototype);
 
   BqParamPaginatorElementPrototype.createdCallback = function() {
-    var attaches, fn, i, importDoc, j, ref, ref1, ref2, ref3, templateContent;
+    var attaches, f, fn, i, importDoc, j, ref, ref1, ref2, ref3, templateContent;
     if ((ref = window.HTMLElement) != null) {
       if ((ref1 = ref.prototype) != null) {
         if ((ref2 = ref1.createdCallback) != null) {
@@ -269,7 +269,13 @@
     importDoc = currentScript.ownerDocument;
     templateContent = importDoc.querySelector('#bq-param-paginator-template').content;
     shimShadowStyles(templateContent.querySelectorAll('style'), 'bq-param-paginator');
-    this.shadowRoot = this.createShadowRoot();
+    if ('function' === typeof this.attachShadowRoot) {
+      this.shadowRoot = this.attachShadowRoot({
+        mode: 'open'
+      });
+    } else {
+      this.shadowRoot = this.createShadowRoot();
+    }
     this.el = templateContent.cloneNode(true);
     this.$ = {};
     attaches = this.el.querySelectorAll('[data-set]');
@@ -286,22 +292,30 @@
     this.qs = new MyUrl();
     this.param = this.getAttribute("parameter");
     this.paginator = document.getElementById(this.getAttribute('paginator'));
-    document.addEventListener('readystatechange', (function(_this) {
+    f = (function(_this) {
       return function() {
         var pg;
         if ('complete' !== document.readyState) {
-          return;
+          return false;
         }
         if (_this.qs.has(_this.param)) {
           pg = parseInt(_this.qs.get(_this.param));
           _this.paginator.setAttribute('current', pg);
         }
-        return _this.paginator.addEventListener('bq-page', function(evt) {
+        _this.paginator.addEventListener('bq-page', function(evt) {
           _this.qs.set(_this.param, evt.detail.n);
           return window.location = _this.qs.url();
         });
+        return true;
       };
-    })(this));
+    })(this);
+    if (!f()) {
+      document.addEventListener('readystatechange', (function(_this) {
+        return function() {
+          return f();
+        };
+      })(this));
+    }
   };
 
   BqParamPaginatorElementPrototype.attributeChangedCallback = function(attr, oldVal, newVal) {
