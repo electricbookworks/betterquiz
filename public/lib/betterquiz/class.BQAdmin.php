@@ -80,7 +80,7 @@ EOSQL
 	public static function AdminsList() {
 		$db = Database::Get();
 		$stmt = $db->Prepare(<<<EOSQL
-			select email from user whre is_admin=1 order by email
+			select email from user where is_admin=1 order by email
 EOSQL
 		);
 		$db->Execute($stmt);

@@ -172,7 +172,7 @@ EOTXT
 	public static function Assert($email, $password) {
 		$db = Database::Get();
 		$stmt = $db->prepare(<<<EOSQL
-			select hash from user where email=?
+			select hash from user where email=? and is_admin=1
 EOSQL
 		);
 		$stmt->bind_param("s", $email);
