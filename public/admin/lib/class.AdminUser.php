@@ -66,10 +66,10 @@ class AdminUser {
 			return new ErrorMessage("Sorry, your reset request code is invalid. Please try again with a new password reset request.");
 		}
 		$db = Database::Get();
-		$stmt = $db->prepare("select count(*) as c from 
+		$stmt = $db->prepare("
+			select count(*) as c from 
 			user
 			where
-			is_admin=1 and
 			email=? and 
 			reset_request_code=? and 
 			reset_request_valid>now() 
@@ -79,12 +79,14 @@ class AdminUser {
 		$c = FALSE;
 		$stmt->bind_result($c);
 		$stmt->fetch();
-
 		$stmt->close();
+		// If we don't find the request code or it's not valid,
+		// we don't reset the password
 		if (0==$c) {
 			$stmt = $db->prepare(<<<EOSQL
 				update user 
-				set reset_request_code=null, reset_request_valid=null
+				set reset_request_code=null, 
+				reset_request_valid=null
 				where email=?
 EOSQL
 			);
@@ -93,6 +95,7 @@ EOSQL
 			$stmt->close();
 			return new ErrorMessage("Sorry, this password reset request has expired. Please try again with a new reset request.", __FILE__, __LINE__);
 		}
+		// We reset the password
 		$stmt = $db->prepare(<<<EOSQL
 			update user
 			set
@@ -116,7 +119,10 @@ EOSQL
 	 */
 	public static function GeneratePasswordResetRequest($email) {
 		$db = Database::Get();
-		$stmt = $db->prepare("select count(*) as c from user where email=?");
+		$stmt = $db->prepare("
+			select count(*) as c from user 
+			where email=?
+			and is_admin=1");
 		$stmt->bind_param("s", $email);
 		if (!$db->Execute($stmt)) {
 			die('FAILED TO select count(*) as c from user where email=' . $email . ': ' . $db->error);
@@ -126,6 +132,7 @@ EOSQL
 		$stmt->fetch();
 		$stmt->close();
 		if (1!=$c) {
+			error_log("$email is not an admin: \$c = $c");
 			// ERROR: $email is not an admin user
 			return new ErrorMessage("$email is not an administrator", __FILE__, __LINE__);
 		}
