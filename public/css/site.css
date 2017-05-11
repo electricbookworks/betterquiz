@@ -89,7 +89,7 @@ input[type="radio"] {
 }
 
 /* line 18, ../../src/scss/base/_general.scss */
-input[type="submit"] {
+input[type="submit"], input[type="button"] {
   display: inline-block;
   background-color: #4f89d2;
   color: white;
@@ -270,4 +270,9 @@ a {
 /* line 53, ../../src/scss/components/_score.scss */
 #submit input[type="submit"] {
   display: block;
+}
+.results_buttons input[type="button"], 
+.results_buttons input[type="submit"] {
+    float: left;
+    margin: 1em 1em 2em 0;
 }
