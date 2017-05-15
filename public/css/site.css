@@ -94,7 +94,7 @@ input[type="submit"], input[type="button"] {
   background-color: #4f89d2;
   color: white;
   padding: 0.5em;
-  margin: 0 0 1em 0;
+  margin: 1em 1em 1em 0;
   -moz-border-radius: 0.2em;
   -webkit-border-radius: 0.2em;
   border-radius: 0.2em;
@@ -269,7 +269,7 @@ a {
 }
 /* line 53, ../../src/scss/components/_score.scss */
 #submit input[type="submit"] {
-  display: block;
+  /*display: block;*/
 }
 .results_buttons input[type="button"], 
 .results_buttons input[type="submit"] {
