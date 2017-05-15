@@ -49,7 +49,10 @@ Your score: <span class="score"><?php echo $exam->Score(); ?> / <?php echo $exam
 <input type="hidden" name="examId" value="<?php echo $examId; ?>" >
 <label for="submit_results">Submit these results for points</label>
 <input type="checkbox" checked="checked" name="submit_results" id="submit_results" value="1" />
-<input type="submit" name="submit" value="Done" />
+<div class="results-buttons">
+    <input type="button" onclick="window.print();" value="Print" name="print">
+    <input type="submit" name="submit" value="Done">
+</div>
 </form>
 <?php
 
