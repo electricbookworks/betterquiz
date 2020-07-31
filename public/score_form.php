@@ -50,10 +50,22 @@ Your score: <span class="score"><?php echo $exam->Score(); ?> / <?php echo $exam
 <label for="submit_results">Submit these results for points</label>
 <input type="checkbox" checked="checked" name="submit_results" id="submit_results" value="1" />
 <div class="results-buttons">
-    <input type="button" onclick="window.print();" value="Print" name="print">
+    <input type="button" onclick="window.print();" value="Print" name="print" id="printButton">
     <input type="submit" name="submit" value="Done">
 </div>
 </form>
+
+<script>
+	function checkForPrint() {
+		'use strict';
+		if (!window.print) {
+			var printButton = document.getElementById('printButton');
+			printButton.style.display = 'none';
+		}
+	}
+	checkForPrint();
+</script>
+
 <?php
 
 include("_footer.php");
