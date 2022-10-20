@@ -114,35 +114,14 @@ EOSQL
 	public static function Create($email) {
 		$db = Database::Get();
 		$stmt = $db->Prepare(<<<EOSQL
-			select id from user
-			where email=?
+			insert into user (email, fullname, hash, regdate, is_admin)
+			values (?, '', '', now(), 1)
+			on duplicate key update is_admin=1
 EOSQL
 		);
 		$stmt->bind_param('s', $email);
 		$db->Execute($stmt);
-		$id = FALSE;
-		$stmt->bind_result($id);
-		$stmt->fetch();
 		$stmt->close();
-		if (!$res) {
-			$stmt = $db->Prepare(<<<EOSQL
-				insert into user(email, is_admin)
-				values (?, 1)
-EOSQL
-			);
-			$stmt->bind_param("s", $email);
-			$db->Execute($stmt);
-			$stmt->close();
-		} else {
-			$stmt = $db->Prepare(<<<EOSQL
-				update user set is_admin=1
-				where email=?
-EOSQL
-			);
-			$stmt->bind_param('s', $email);
-			$db->Execute($stmt);
-			$stmt->close();
-		}
 	}
 
 }

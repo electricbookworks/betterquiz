@@ -23,11 +23,15 @@ if ("POST"==$_SERVER["REQUEST_METHOD"]) {
 	} else {
 		$res = AdminUser::ResetPassword($email, $code, $pwd1);
 		if (!ErrorMessage::IsError($res)) {
-			new Flash("Your password has been reset. Please log in.");
+			Flash::New("Your password has been reset. Please log in.");
 			header("Location: login.php");
 			die();
 		}
-		$error = $res->Message();
+		if (is_object($res)) {
+			$error = $res->Message();
+		} else {		
+			die(__FILE__.":".__LINE__." : Unreachable code");
+		}
 	}
 }
 

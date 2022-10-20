@@ -1,4 +1,10 @@
-drop table if exists options;
-drop table if exists question;
-drop table if exists quiz_meta;
-drop table if exists quiz;
+DROP TABLE IF EXISTS admins;
+DROP TABLE IF EXISTS answer;
+DROP TABLE IF EXISTS exam;
+DROP TABLE IF EXISTS options;
+DROP TABLE IF EXISTS question;
+DROP TABLE IF EXISTS quiz_meta;
+DROP TABLE IF EXISTS quiz;
+DROP TABLE IF EXISTS user_forgot;
+DROP TABLE IF EXISTS user;
+

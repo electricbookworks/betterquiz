@@ -5,6 +5,9 @@
  * logged in.
  */
 class AdminUser {
+	var $Email;
+	var $Issuer;
+
 	public function __construct($email, $issuer) {
 		$this->Email = $email;
 		$this->Issuer = $issuer;
@@ -59,9 +62,9 @@ class AdminUser {
 
 	/**
 	 * ResetPassword resets the user's password.
-	 * @return true on success, Error class on failure.
+	 * @return true|ErrorMessage on success, Error class on failure.
 	 */
-	public static function ResetPassword($email, $code, $newPassword) {
+	public static function ResetPassword($email, $code, $newPassword) : ErrorMessage|bool {
 		if (""==$code) {
 			return new ErrorMessage("Sorry, your reset request code is invalid. Please try again with a new password reset request.");
 		}
@@ -106,7 +109,8 @@ EOSQL
 				email=?
 EOSQL
 		);
-		$stmt->bind_param("ss", password_hash($newPassword, PASSWORD_DEFAULT), $email);
+		$passwordHash = password_hash($newPassword, PASSWORD_DEFAULT);
+		$stmt->bind_param("ss", $passwordHash, $email);
 		$db->Execute($stmt);
 		$stmt->close();
 		return true;
@@ -117,7 +121,7 @@ EOSQL
 	 * reset request for the given admin email.
 	 * @return True on success, Error class on failure.
 	 */
-	public static function GeneratePasswordResetRequest($email) {
+	public static function GeneratePasswordResetRequest(string $email) : object|bool {
 		$db = Database::Get();
 		$stmt = $db->prepare("
 			select count(*) as c from user 
@@ -132,7 +136,7 @@ EOSQL
 		$stmt->fetch();
 		$stmt->close();
 		if (1!=$c) {
-			error_log("$email is not an admin: \$c = $c");
+			error_log("$email is not an admin: \$c = " . json_encode($c));
 			// ERROR: $email is not an admin user
 			return new ErrorMessage("$email is not an administrator", __FILE__, __LINE__);
 		}
@@ -189,7 +193,7 @@ EOSQL
 		$stmt->fetch();
 		$stmt->close();
 		if (!password_verify($password, $h)) {
-			new Flash("Sorry, your username and password combination is not correct. Please try again.", "error");
+			Flash::New("Sorry, your username and password combination is not correct. Please try again.", "error");
 			return false;
 		}
 

@@ -89,7 +89,8 @@ class BQQuestion {
 			limit 0,1
 EOSQL
 		);
-		$stmt->bind_param("i", $this->_id);
+		$questionId = $this->_id;
+		$stmt->bind_param("i", $questionId);
 		$db->Execute($stmt);
 
 		$id = FALSE;
@@ -120,7 +121,8 @@ EOSQL
 			limit 0,1
 EOSQL
 		);
-		$stmt->bind_param("i", $this->_id);
+		$quizId = $this->_id;
+		$stmt->bind_param("i", $quizId);
 		$db->Execute($stmt);
 
 		$id = FALSE;
@@ -150,27 +152,31 @@ EOSQL
 
 	public function SaveToDatabase($db, $quiz, $number) {
 		$db = Database::Get($db);
+		$questionId = $this->_id;
+		$question = $this->_question;
 		if (0==$this->_id) {
 			$stmt = $db->Prepare("insert into question (quiz_id, question_text, question_number) values (?,?,?)");
-			$stmt->bind_param("isi", $quiz->Id(), $this->_question, $number);
+			$quizId = $quiz->Id();
+			$stmt->bind_param("isi", $quizId, $question, $number);
 			$db->Execute($stmt);
 			$this->_id = $db->LastInsertId();
+			$questionId = $this->_id;
 		} else {
 			$stmt = $db->prepare("update question set question_text=?, question_number=? where id=?");
-			$stmt->bind_param("sii", $this->_question, $number, $this->_id);
+			$stmt->bind_param("sii", $question, $number, $questionId);
 			$db->Execute($stmt);
 		}
 		if (0==count($this->_options)) {
-			$db->Query("delete from options where question_id=" . $this->_id);
+			$db->Query("delete from options where question_id=" . inval($this->_id));
 		} else {
 			$keys = array();
 			for ($i=0; $i<count($this->_options); $i++) {
 				$this->_options[$i]->SaveToDatabase($db, $this, $i);
-				$keys[] = $this->_options[$i]->Id();
+				$keys[] = intval($this->_options[$i]->Id());
 			}
 
 			$db->Query("delete from options where question_id=" .
-				$this->_id . " and not id in (" . implode(",", $keys) . ")");
+				intval($this->_id) . " and not id in (" . implode(",", $keys) . ")");
 		}
 	}
 

@@ -49,7 +49,7 @@ class BQExam {
 	/**
 	 * CsvArrayHeader returns the headers for the fields in the CSV output
 	 */
-	public function CsvArrayHeader() {
+	public static function CsvArrayHeader() {
 		return array(
 			"QuizId","QuizTitle",
 			"UserEmail", "UserMobile","UserFullname",
@@ -311,7 +311,8 @@ EOSQL
 	public function SetCompleted($db) {
 		$db = Database::Get($db);
 		$stmt = $db->Prepare("update exam set enddate=now() where id=? and enddate is null");
-		$stmt->bind_param("i", $this->_id);
+		$examId = $this->_id;
+		$stmt->bind_param("i", $examId);
 		$db->Execute($stmt);
 		$stmt->Close();		
 	}
@@ -320,7 +321,8 @@ EOSQL
 		$db = Database::Get($db);
 		$stmt = $db->Prepare("update exam set submitted=? where id=?");
 		$submit = $submit ? 1 : 0;
-		$stmt->bind_param("ii", $submit, $this->_id);
+		$examId = $this->_id;
+		$stmt->bind_param("ii", $submit, $examId);
 		$db->Execute($stmt);
 		$stmt->Close();
 	}

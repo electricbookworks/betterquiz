@@ -71,7 +71,8 @@ class BQOption {
 				and o.id=?
 EOSQL
 		);
-		$stmt->bind_param("i", $this->_id);
+		$optionId = $this->_id;
+		$stmt->bind_param("i", $optionId);
 		return self::loadFromStmt($db, $stmt);
 	}
 
@@ -115,16 +116,19 @@ EOSQL
 
 	public function SaveToDatabase($db, $question, $number) {
 		$correct = $this->_correct ? 1 : 0;
+		$optionId = $this->_id;
+		$questionId = $question->Id();
+		$option = $this->_option;
 		if (0==$this->_id) {
 			$stmt = $db->Prepare(
 				"insert into options (question_id, option_number, option_text, correct) values (?,?,?,?)");
-			$stmt->bind_param("iisi", $question->Id(), $number, $this->_option, $correct);
+			$stmt->bind_param("iisi", $questionId, $number, $option, $correct);
 			$db->Execute($stmt);
 			$this->_id = $db->LastInsertId();
 		} else {
 			$stmt = $db->Prepare(
 				"update options set question_id=?, option_number=?, option_text=?, correct=? where id=?");
-			$stmt->bind_param("iisii", $question->Id(), $number, $this->_option, $correct, $this->_id);
+			$stmt->bind_param("iisii", $questionId, $number, $option, $correct, $optionId);
 			$db->Execute($stmt);
 		}
 		$stmt->Close();

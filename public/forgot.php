@@ -24,10 +24,8 @@ if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
 		$errors->Error("Can't find that user. (Should not get here.)");
 		Utils::Redirect("forgot_form.php", $_REQUEST);
 	}
-	// @TODO Send email about forgotten password
-	error_log("About to call BQUserForget::EmailPassword($uid, $email, $new)");
 	BQUserForgot::EmailPassword($uid, $email, $new);
-	new Flash("We've emailed you a new password.");
+	Flash::New("We've emailed you a new password.");
 	Utils::Redirect("login_form.php", $_REQUEST);
 }
 
@@ -46,7 +44,6 @@ if (!$new) {
 	$errors->Error("Can't find that user by mobile. (Should not get here.)");
 	Utils::Redirect("forgot_form.php", $_REQUEST);
 }	
-// @TODO Send SMS with new password
 BQUserForgot::SMSPassword($uid, $mobile, $new);
-new Flash("We've SMS'd you a new password.");
+Flash::New("We've SMS'd you a new password.");
 Utils::Redirect("login_form.php", $_REQUEST);

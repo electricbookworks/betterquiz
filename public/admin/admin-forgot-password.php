@@ -8,11 +8,15 @@ if ("POST"==$_SERVER["REQUEST_METHOD"]) {
 	$email = $_POST["email"];
 	$res = AdminUser::GeneratePasswordResetRequest($email);
 	if (!ErrorMessage::IsError($res)) {
-		new Flash("A password reset link has been sent to $email. Please check your email.");
+		Flash::New("A password reset link has been sent to $email. Please check your email.");
 		header("Location: login.php");
 		die();
 	}
-	$error = $res->Message();
+	if (is_object($res)) {
+		$error = $res->Message();
+	} else {
+		die(__FILE__.":".__LINE__." : Unreachable code");
+	}
 }
 
 include("_header.php");

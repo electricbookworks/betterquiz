@@ -14,7 +14,7 @@ Installing a BetterQuiz server is relatively simple.
 
 3. Copy `public/lib/settings.template.php` to `public/lib/settings.local.php` and edit this file to contain your database details and your Panacea SMS API account details.
 
-4. Migrate the database. This is done by executing every script of the form `src/sql/betterquizN.sql` against the database in ascending numerical order 0, 1, 2 ...
+4. Migrate the database. This is done by executing every script of the form `src/sql/betterquizN.sql` against the database in ascending numerical order 0, 1, 2 ... (You can use the `database-up.sh <dbname>` script.
 
 You're ready to go!
 
@@ -87,10 +87,6 @@ SQL migrations scripts. These are each of the form betterquizN.sql and betterqui
 ### src/tools
 
 The `src/tools` directory contains a few basic tools for betterquiz operation.
-
-#### src/tools/install.sh
-
-A very basic bash script to install betterquiz (which is assumed to be in /opt/betterquiz) on a fresh Ubuntu server. It does not migrate the database, nor setup database connection options. See Installation above for detailed installation instructions.
 
 #### src/tools/md2bqf.pl
 

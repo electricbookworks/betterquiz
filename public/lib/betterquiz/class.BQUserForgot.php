@@ -30,7 +30,10 @@ class BQUserForgot {
 			(?,?,?,?,date_add(now(), interval 1 day))
 EOSQL
 		);
-		$stmt->bind_param("isss", $user->Id(), $user->Email(), $user->Mobile(), $hash);
+		$userId = $user->Id();
+		$userEmail = $user->Email();
+		$userMobile = $user->Mobile();
+		$stmt->bind_param("isss", $userId, $userEmail, $userMobile, $hash);
 		$db->Execute($stmt);
 		$stmt->Close();
 		return $newPassword;
