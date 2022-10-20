@@ -5,6 +5,11 @@
  * sites.
  */
 class Site {
+	var $scripts;
+	var $styles;
+	var $imports;
+	var $js;
+	
 	public function __construct() {
 		$this->scripts = array();
 		$this->styles = array();
