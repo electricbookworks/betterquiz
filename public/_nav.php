@@ -1,4 +1,5 @@
 <?php
+global $user;
 if (isset($excludeNav) && $excludeNav) return;
 
 $self = urlencode($_SERVER['REQUEST_URI']);

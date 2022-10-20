@@ -1,0 +1,8 @@
+{
+    "name": "craig/betterquiz",
+    "description": "Betterquiz composer package, just for testing for php8 compatibility",
+    "type": "project",
+    "require": {
+        "phan/phan": "^5.4"
+    }
+}

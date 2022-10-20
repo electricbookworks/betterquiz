@@ -149,37 +149,40 @@ class BQQuiz {
 		$db->Autocommit(false);
 		$db->Db()->begin_transaction();
 		try {
+			$quizId = $this->_id;
 			if (0==$this->_id) {
 				$stmt = $db->Prepare("insert into quiz (title) values (?)");
 				$title = $this->Title();
 				$stmt->bind_param("s", $title);
 				$db->Execute($stmt);
 				$this->_id = $db->LastInsertId();
+				$quizId = $this->_id;
 			} else {
 				$stmt = $db->Prepare("update quiz set title=? where id=?");
-				$stmt->bind_param("si", $this->_meta["title"], $this->_id);
+				$quizTitle = $this->_meta["title"];
+				$stmt->bind_param("si", $quizTitle, $quizId);
 				$db->Execute($stmt);
 			}
 
 			// Inefficient, but we shouldn't be uploading so many quizzes that this will
 			// be an issue
-			$db->Query("delete from quiz_meta where quiz_id=" . $this->_id);
+			$db->Query("delete from quiz_meta where quiz_id=" . intval($quizId));
 
 			$stmt = $db->Prepare("insert into quiz_meta(quiz_id, meta_key, meta_value) values (?,?,?)");
 			foreach ($this->_meta as $k=>$v) {
-				$stmt->bind_param("iss", $this->_id, $k, $v);
+				$stmt->bind_param("iss", $quizId, $k, $v);
 				$db->Execute($stmt);
 			}
 
 			if (0==count($this->_questions)) {
-				$db->Query("delete from question where quiz_id=" . $this->_id);
+				$db->Query("delete from question where quiz_id=" . intval($quizId));
 			} else {
 				$ids = array();
 				for ($i=0; $i<count($this->_questions); $i++) {
 					$this->_questions[$i]->SaveToDatabase($db, $this, $i);
-					$ids[] = $this->_questions[$i]->Id();
+					$ids[] = intval($this->_questions[$i]->Id());
 				}
-				$db->Query("delete from question where quiz_id=" . $this->_id . " and not " .
+				$db->Query("delete from question where quiz_id=" . intval($this->_id) . " and not " .
 					"id in (" . implode(",", $ids) . ")");
 			}
 			$db->Db()->commit();

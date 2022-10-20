@@ -1,12 +1,12 @@
 title: Testing error when answer option is 0
 
-What is the normal total serum bilirubin concentration (TSB) in cord blood?
+What is the normal total *serum bilirubin* concentration (TSB) in cord blood?
 -   0 this zero creates a line break. On its own as an option, it throws an error
 +   Less than 35 µmol/l
 -   35–55 µmol/l
 -   More than 55 µmol/l
 
-What is the normal total serum bilirubin concentration (TSB) in cord blood?
+What is the normal total *serum bilirubin* concentration (TSB) in cord blood?
 -   0 µmol/l
 +   Less than 35 µmol/l
 -   35–55 µmol/l

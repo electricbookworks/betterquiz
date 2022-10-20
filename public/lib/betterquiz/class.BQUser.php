@@ -116,6 +116,9 @@ EOSQL
 
 	public function SaveToDatabase($db) {
 		$db = Database::Get($db);
+		if (!$this->_mergeId || intval($this->_mergeId)==0) {
+			$this->_mergeId = null;
+		}
 		if (0==$this->_id) {
 			$stmt = $db->Prepare( <<<EOSQL
 				insert into user
@@ -123,6 +126,7 @@ EOSQL
 			 	values (?,?,?,?,now(),?)
 EOSQL
 			);
+			error_log('_mergeId = ' . $this->_mergeId . ", type=". gettype($this->_mergeId));
 			$stmt->bind_param("ssssi",
 				$this->_fullname, $this->_email, $this->_mobile, $this->_hash, $this->_mergeId);
 			$db->Execute($stmt);

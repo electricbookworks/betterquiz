@@ -1,1 +1,0 @@
-alter table user add merge_with bigint null references user(id) on delete cascade;

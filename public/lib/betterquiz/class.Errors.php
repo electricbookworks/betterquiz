@@ -25,7 +25,7 @@ class Errors {
 	 * in this class, but in the Flash class.
 	 */
 	public function Error($err) {
-		new Flash($err, "error");
+		Flash::New($err, "error");
 		$this->_any = true;
 	}
 }

@@ -11,7 +11,7 @@ $q = BQQuestion::LoadQuestionById($db, $qid);
 
 if (!array_key_exists("o$qid", $_POST)) {
 	// The user hasn't chosen an option for the previous question
-	new Flash("Please choose one of the options for this question.");
+	Flash::New("Please choose one of the options for this question.");
 	Utils::Redirect("question.php", array("q"=>$qid));
 }
 $o = intval($_POST["o$qid"]);

@@ -1,3 +1,5 @@
 betterquiz.sublime*
 public/lib/settings.local.php
 .sass-cache/
+
+/vendor/

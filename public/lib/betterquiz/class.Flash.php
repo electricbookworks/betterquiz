@@ -14,6 +14,11 @@ class Flash {
 	var $_class;
 	var $_msg;
 
+	/** Utility method New creates a new Flash message, but doesn't return it. */
+	public static function New($msg, $class="info") : void {
+		$_ = new Flash($msg, $class);
+	}
+
 	public function __construct($msg, $class="info") {
 		@session_start();
 		$this->_class = $class;
@@ -28,7 +33,7 @@ class Flash {
 		$_SESSION["_flash"] = $flashes;
 		error_log("Set _flash = " . json_encode($flashes));
 		session_commit();
-	}
+	}	
 
 	public static function Load() {
 		@session_start();
