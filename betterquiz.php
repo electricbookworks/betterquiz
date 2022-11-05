@@ -8,7 +8,7 @@ if (!file_exists($docoptFile)) {
 		$stdout = [];
 		$resultCode = 0;
 		echo "Installing composer..." . PHP_EOL;
-		exec('/usr/bin/env bash -- ./install-composer.sh', $stdout, $resultCode);
+		exec('/usr/bin/env bash -- ./lib-cli/install-composer.sh', $stdout, $resultCode);
 		if (0!=$resultCode) {
 			echo "Installing composer failed:\n" . 
 				implode(PHP_EOL, $stdout) . 
