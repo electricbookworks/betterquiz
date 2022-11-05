@@ -1,5 +1,6 @@
 betterquiz.sublime*
+composer.phar
 public/lib/settings.local.php
 .sass-cache/
-
+phan.out
 /vendor/

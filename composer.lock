@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d07d5af50b9db3978903ae86b98ad154",
+    "content-hash": "bc392b854c76861b1df805fff66fa191",
     "packages": [
         {
             "name": "composer/pcre",
@@ -223,6 +223,56 @@
                 }
             ],
             "time": "2022-02-25T21:32:43+00:00"
+        },
+        {
+            "name": "docopt/docopt",
+            "version": "1.0.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/docopt/docopt.php.git",
+                "reference": "bf3683a16e09fa1665e493eb4d5a29469e132a4f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/docopt/docopt.php/zipball/bf3683a16e09fa1665e493eb4d5a29469e132a4f",
+                "reference": "bf3683a16e09fa1665e493eb4d5a29469e132a4f",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "4.1.*"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "src/docopt.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Blake Williams",
+                    "email": "code@shabbyrobe.org",
+                    "homepage": "http://docopt.org/",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Port of Python's docopt for PHP >=5.3",
+            "homepage": "http://github.com/docopt/docopt.php",
+            "keywords": [
+                "cli",
+                "docs"
+            ],
+            "support": {
+                "issues": "https://github.com/docopt/docopt.php/issues",
+                "source": "https://github.com/docopt/docopt.php/tree/1.0.4"
+            },
+            "time": "2019-12-03T02:48:46+00:00"
         },
         {
             "name": "felixfbecker/advanced-json-rpc",
@@ -1523,6 +1573,82 @@
                 }
             ],
             "time": "2022-10-10T09:34:31+00:00"
+        },
+        {
+            "name": "twig/twig",
+            "version": "v3.4.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/twigphp/Twig.git",
+                "reference": "c38fd6b0b7f370c198db91ffd02e23b517426b58"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/c38fd6b0b7f370c198db91ffd02e23b517426b58",
+                "reference": "c38fd6b0b7f370c198db91ffd02e23b517426b58",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.2.5",
+                "symfony/polyfill-ctype": "^1.8",
+                "symfony/polyfill-mbstring": "^1.3"
+            },
+            "require-dev": {
+                "psr/container": "^1.0",
+                "symfony/phpunit-bridge": "^4.4.9|^5.0.9|^6.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.4-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Twig\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com",
+                    "homepage": "http://fabien.potencier.org",
+                    "role": "Lead Developer"
+                },
+                {
+                    "name": "Twig Team",
+                    "role": "Contributors"
+                },
+                {
+                    "name": "Armin Ronacher",
+                    "email": "armin.ronacher@active-4.com",
+                    "role": "Project Founder"
+                }
+            ],
+            "description": "Twig, the flexible, fast, and secure template language for PHP",
+            "homepage": "https://twig.symfony.com",
+            "keywords": [
+                "templating"
+            ],
+            "support": {
+                "issues": "https://github.com/twigphp/Twig/issues",
+                "source": "https://github.com/twigphp/Twig/tree/v3.4.3"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/twig/twig",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2022-09-28T08:42:51+00:00"
         },
         {
             "name": "tysonandre/var_representation_polyfill",

@@ -3,6 +3,8 @@
     "description": "Betterquiz composer package, just for testing for php8 compatibility",
     "type": "project",
     "require": {
-        "phan/phan": "^5.4"
+        "phan/phan": "^5.4",
+        "docopt/docopt": "^1.0",
+        "twig/twig": "^3.0"
     }
 }
