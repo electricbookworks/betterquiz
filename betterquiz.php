@@ -52,7 +52,7 @@ Usage:
   betterquiz.php database [--host=HOST --username=USERNAME --password=PASSWORD --database=DATABASE]
   betterquiz.php panacea [--username=USERNAME --password=PASSWORD]
   betterquiz.php apache --fqdn=FQDN [--php=PHPVERSION] [--port=PORT] [--no-ssl]  
-  betterquiz.php caddy --fqdn=FQDN [--port=PORT]
+  betterquiz.php caddy --fqdn=FQDN [--php=PHPVERSION] [--port=PORT]
 
 Options:
   -h --help                  Show this screen.
