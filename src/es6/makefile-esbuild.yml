@@ -1,0 +1,8 @@
+# makefile-esbuild.yml
+node_version: 18.12.1
+makefile: Makefile-esbuild
+targets:
+- name: bqinstall
+  srcfile: ./BQInstall.js
+  destfile: ../../public/js/BQInstall.js
+  template: InstallTemplates.js

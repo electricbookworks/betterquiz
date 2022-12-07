@@ -1,0 +1,13 @@
+<template>
+	<style dtemplate-include="BQWizard.scss" dtemplate-process="scss">
+	</style>
+	<header id="header">
+	</header>
+	<slot id="main">
+	</slot>
+	<footer>
+		<button id="cancel" data-event="click:cancel">Cancel</button>
+		<button id="previous" data-event="click:previous" disabled>Previous</button>
+		<button id="next" data-event="click:next">Next</button>
+	</footer>
+</template>

@@ -1,0 +1,12 @@
+:host {
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-items: stretch;
+}
+label {
+	margin-top: 0.6em;
+	margin-bottom: -0.2em;
+	font-size: 0.7em;
+	color: #666;
+}

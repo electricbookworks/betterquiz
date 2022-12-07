@@ -38,7 +38,7 @@ if (!file_exists($docoptFile)) {
 
 include_once($docoptFile);
 include_once('vendor/autoload.php');
-include_once("lib-cli/parsesettings.php");
+include_once('public/lib/include.php');
 
 $doc = <<<DOC
 BetterQuiz command line utility.
@@ -49,6 +49,7 @@ Usage:
   betterquiz.php (-h | --help)
   betterquiz.php --version
   betterquiz.php bulksms [--username=USERNAME --password=PASSWORD]
+  betterquiz.php download [--remotedir=REMOTEDIR] [--localdir=LOCALDIR]
   betterquiz.php database [--host=HOST --username=USERNAME --password=PASSWORD --database=DATABASE]
   betterquiz.php panacea [--username=USERNAME --password=PASSWORD]
   betterquiz.php apache --fqdn=FQDN [--php=PHPVERSION] [--port=PORT] [--no-ssl]  
@@ -57,6 +58,8 @@ Usage:
 Options:
   -h --help                  Show this screen.
   --version                  Show version.
+  --localdir=LOCALDIR        Local directory to store site backup [default: ./live-site-backup].
+  --remotedir=REMOTEDIR      Remote directory on website for web site files [default: /betterquiz:/usr/www/users/quizbakqhw/].
   --fqdn=FQDN                Fully qualified domain name of the betterquiz instance.
   --host=HOST                Server host of the database [default: localhost].
   --database=DATABASE        Database name [default: betterquiz].
@@ -71,15 +74,19 @@ DOC;
 $args = Docopt::handle($doc, array('version'=>'betterquiz 1.0.0'));
 
 if ($args['apache']) {
-	executeApacheCommand($args);
+	ApacheCommand($args);
 } elseif ($args['bulksms']) {
-	executeBulksmsCommand($args);
+	BulksmsCommand($args);
 } elseif ($args['database']) {
-	executeDatabaseCommand($args);
+	DatabaseCommand($args);
+} elseif ($args['deploy']) {
+	DeployCommand($args);
+} elseif ($args['download'] || $args['upload']) {
+	DownloadOrUploadCommand($args);
 } elseif ($args['caddy']) {
-	executeCaddyCommand($args);
+	CaddyCommand($args);
 } elseif ($args['panacea']) {
-	executePanaceaCommand($args);
+	PanaceaCommand($args);
 }
 
 /**
@@ -108,9 +115,9 @@ function printValues(array $values) {
 	}
 }
 
-// executeApacheCommand prints to stdout the apache
+// ApacheCommand prints to stdout the apache
 // configuration file for the betterquiz instance.
-function executeApacheCommand(docopt\Response $args) {
+function ApacheCommand(docopt\Response $args) {
 	$loader = new \Twig\Loader\FilesystemLoader('./lib-cli/twig-templates');
 	$twig = new \Twig\Environment($loader);
 
@@ -124,8 +131,11 @@ function executeApacheCommand(docopt\Response $args) {
 }
 
 
-// executePanaceaCommand handles the 'bulksms' command
-function executeBulksmsCommand(docopt\Response  $args) {		
+/**
+ * BulksmsCommand sets the BulkSMS username 
+ * and password values.
+ */
+function BulksmsCommand(docopt\Response  $args) {		
 	$settings = parseBetterquizSettings(argsToSetArray([
 		'--username'=>'BULKSMS_USERNAME',
 		'--password'=>'BULKSMS_PASSWORD',
@@ -133,9 +143,9 @@ function executeBulksmsCommand(docopt\Response  $args) {
 	printValues($settings);
 }
 
-// executeCaddy installs Caddy webserver, if necessary, and starts betterquiz
+// Caddy installs Caddy webserver, if necessary, and starts betterquiz
 // on the defined port (with or without ssl)
-function executeCaddyCommand(docopt\Response $args) {
+function CaddyCommand(docopt\Response $args) {
 	if (!file_exists('lib-cli/caddy')) {
 		$wd = getcwd();
 		chdir("lib-cli");
@@ -149,8 +159,11 @@ function executeCaddyCommand(docopt\Response $args) {
 	}
 }
 
-// executeDatabaseCommand handles the 'database' command
-function executeDatabaseCommand(docopt\Response $args) {
+/**
+ * DatabaseCommand sets the database
+ * host, username, password and database.
+ */
+function DatabaseCommand(docopt\Response $args) {
 	$settings = parseBetterquizSettings(argsToSetArray([
 		'--host'=>'DBHOST',
 		'--username'=>'DBUSERNAME',
@@ -160,9 +173,60 @@ function executeDatabaseCommand(docopt\Response $args) {
 	printValues($settings);
 }
 
+/**
+ * DeployCommand deploys the code in the repo to the live site.
+ */
+function DeployCommand(docopt\Response $args) {
+	$src = "./public/";
+	$dest= $args["--remote-dir"];
 
-// executePanaceaCommand handles the 'panacea' command
-function executePanaceaCommand(docopt\Response  $args) {
+	$cmd = "rsync -avz $src $dest";
+
+	$stdout = [];
+	$resultCode = 0;
+	echo $cmd . PHP_EOL;
+	exec($cmd, $stdout, $resultCode);
+	if (0!=$resultCode) {
+		echo "ERROR $cmd:\n" . 
+			implode(PHP_EOL, $stdout) . PHP_EOL;
+		exit($resultCode);
+	}
+}
+}
+
+/**
+ * DownloadOrUploadCommand downloads or uploads a backup copy
+ * of the site.
+ */
+function DownloadOrUploadCommand(docopt\Response $args) {
+	$downloading = $args['download'];
+	$localDir = './live-site-backup/';
+	$remoteDir = 'betterquiz:/usr/www/users/quizbakqhw/';
+	if ($downloading) {
+		$src = $remoteDir;
+		$dest = $localDir;
+	} else {
+		$src = $localDir;
+		$dest = $remoteDir;
+	}
+	$cmd = "rsync -avz $src $dest";
+
+	$stdout = [];
+	$resultCode = 0;
+	echo $cmd . PHP_EOL;
+	exec($cmd, $stdout, $resultCode);
+	if (0!=$resultCode) {
+		echo "ERROR $cmd:\n" . 
+			implode(PHP_EOL, $stdout) . PHP_EOL;
+		exit($resultCode);
+	}
+}
+
+
+/**
+ * PanaceaCommand sets panacea sms username and password
+ */
+function PanaceaCommand(docopt\Response  $args) {
 		$settings = parseBetterquizSettings(argsToSetArray([
 		'--username'=>'PANACEA_USERNAME',
 		'--password'=>'PANACEA_PASSWORD',

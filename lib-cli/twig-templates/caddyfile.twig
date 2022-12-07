@@ -1,0 +1,10 @@
+{
+	http_port {{ http }}
+	https_port {{ https }}
+	email {{ email }}
+}
+{{fqdn}}
+
+root * {{publicdir}}
+php_fastcgi unix//var/run/php/php{{phpversion}}-fpm.sock
+file_server

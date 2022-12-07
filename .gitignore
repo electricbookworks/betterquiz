@@ -1,4 +1,6 @@
 betterquiz.sublime*
+live-site-backup/
+Caddyfile
 composer.phar
 public/lib/settings.local.php
 .sass-cache/

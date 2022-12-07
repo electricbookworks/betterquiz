@@ -14,3 +14,4 @@ include_once("class.CssStore.php");
 include_once("class.SelfUrl.php");
 
 include_once("class.BQMarkdown.php");
+include_once("parsesettings.php");

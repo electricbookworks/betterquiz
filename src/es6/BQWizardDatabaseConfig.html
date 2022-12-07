@@ -1,0 +1,14 @@
+<template>
+	<style dtemplate-include="BQWizardDatabaseConfig.scss" dtemplate-process="scss"> </style>	
+	<label for="server">Server</label>
+	<input type="text" id="server" placeholder="localhost" value="localhost"/>
+	<label for="username">Username</label>
+	<input type="text" id="username" placeholder="user" value="betterquiz"/>
+	<label for="password">Password</label>
+	<input-password id="password" placeholder="password"  value="betterquiz"> </input-password>
+	<label for="database">Database</label>
+	<input type="text" id="database" placeholder="betterquiz"  value="betterquiz"/>
+
+	<bq-status id="status" ok="So far so good" explain="We got some issues.">
+	</bq-status>
+</template>

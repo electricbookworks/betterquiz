@@ -6,5 +6,7 @@ include_once("class.Utils.php");
 include_once("class.PanaceaSMS.php");
 include_once("class.BulkSMS.php");
 
-include_once("settings.local.php");
+if (file_exists(dirname(__FILE__) . '/settings.local.php')) {
+	include_once("settings.local.php");
+}
 

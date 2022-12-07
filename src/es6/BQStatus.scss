@@ -1,0 +1,43 @@
+:host {
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-items: stretch;
+	width: 100%;
+	font-size: 0.8em;
+
+
+	margin: 0.6em 0;
+	padding: 0.6em 0;
+}
+
+:host(.ok) {
+	#ok {
+		display: block;
+	}
+	#error {
+		display: none;
+	}
+}
+
+:host(.error) {
+	#ok { display: none; }
+	#error { display: block; }
+}
+
+#ok, #error {
+	padding: 0.6em;
+}
+#ok {
+	border: 1px solid green;
+	color: #060;
+	background-color: #dfd;
+}
+#error {
+	border: 1px solid red;
+	color: red;
+	background-color: #fff0f0;
+}
+#explain {
+	color: #666;
+}
