@@ -20,6 +20,7 @@ $q = BQQuestion::LoadQuestionById($db, $qid);
 if (FALSE===$q) {
 	die("FAILED TO LOAD QUESTION $qid");
 }
+// echo "QUESTION = <code><pre>" . json_encode($q) . "</pre></code>";
 ?>
 <div class="question">
 <form method="post" action="post_answer.php">

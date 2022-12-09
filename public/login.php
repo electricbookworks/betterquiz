@@ -7,7 +7,7 @@
 include_once("lib/include.php");
 
 $act = $_REQUEST["act"];
-$qz = $_REQUEST["qz"];	// qz is quiz ID and is carried through everything
+$qz = intval($_REQUEST["qz"]);	// qz is quiz ID and is carried through everything
 $email = $_REQUEST["email"];
 $password = $_REQUEST["password"];
 

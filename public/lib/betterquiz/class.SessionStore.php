@@ -8,18 +8,26 @@
  * away the actual storage method for the site developer.
  */
 class SessionStore {
-	public static function Store($key, $value) {
-		@session_start();
-		$_SESSION[$key] = $value;
+	public static function Start() {
+		if (!@session_start()) {
+			die('Session failed to start');
+		}
+	}
+	public static function Commit() {
 		session_commit();
+	}
+	public static function Store($key, $value) {
+		self::Start();
+		$_SESSION[$key] = $value;
+		self::Commit();
 	}
 	public static function Clear($key) {
-		@session_start();
+		self::Start();
 		unset($_SESSION[$key]);
-		session_commit();
+		self::Commit();
 	}
 	public static function Get($key, $default=false) {
-		@session_start();
+		self::Start();
 		return array_key_exists($key, $_SESSION) ? $_SESSION[$key] : $default;
 	}
 }

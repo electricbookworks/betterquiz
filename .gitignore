@@ -6,3 +6,4 @@ public/lib/settings.local.php
 .sass-cache/
 phan.out
 /vendor/
+fetch-db.sh

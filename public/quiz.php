@@ -37,7 +37,8 @@ $userId = BQUser::GetSession();
 if (!$userId) {
 	Utils::Redirect("login_form.php", array("qz"=>$qz));
 }
+
 $questionId = BQQuiz::FindFirstQuestionId($db, $qz);
 
 BQExam::StartExam($db, $qz, $userId);
-Utils::Redirect("question.php", array("q"=>$qz));
+Utils::Redirect("question.php", array("q"=>$questionId));

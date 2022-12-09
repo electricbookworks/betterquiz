@@ -13,13 +13,13 @@ CREATE TABLE IF NOT EXISTS user (
   PRIMARY KEY (id),
   KEY merge_with (merge_with),
   CONSTRAINT user_ibfk_1 FOREIGN KEY (merge_with) REFERENCES user (id) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS quiz (
   id bigint(20) NOT NULL AUTO_INCREMENT,
   title varchar(1024) NOT NULL,
   PRIMARY KEY (id)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
 CREATE TABLE IF NOT EXISTS question (
@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS question (
   PRIMARY KEY (id),
   KEY quiz_id (quiz_id),
   CONSTRAINT question_ibfk_1 FOREIGN KEY (quiz_id) REFERENCES quiz (id) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
 CREATE TABLE IF NOT EXISTS exam (
@@ -45,7 +45,7 @@ CREATE TABLE IF NOT EXISTS exam (
   KEY user_id (user_id),
   CONSTRAINT exam_ibfk_1 FOREIGN KEY (quiz_id) REFERENCES quiz (id) ON DELETE CASCADE,
   CONSTRAINT exam_ibfk_2 FOREIGN KEY (user_id) REFERENCES user (id) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS options (
   id bigint(20) NOT NULL AUTO_INCREMENT,
@@ -56,7 +56,7 @@ CREATE TABLE IF NOT EXISTS options (
   PRIMARY KEY (id),
   KEY question_id (question_id),
   CONSTRAINT options_ibfk_1 FOREIGN KEY (question_id) REFERENCES question (id) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS answer (
   exam_id bigint(20) NOT NULL,
@@ -65,7 +65,7 @@ CREATE TABLE IF NOT EXISTS answer (
   KEY option_id (option_id),
   CONSTRAINT answer_ibfk_1 FOREIGN KEY (exam_id) REFERENCES exam (id) ON DELETE CASCADE,
   CONSTRAINT answer_ibfk_2 FOREIGN KEY (option_id) REFERENCES options (id) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS quiz_meta (
   quiz_id bigint(20) NOT NULL,
@@ -73,7 +73,7 @@ CREATE TABLE IF NOT EXISTS quiz_meta (
   meta_value varchar(100) NOT NULL,
   PRIMARY KEY (quiz_id,meta_key),
   CONSTRAINT quiz_meta_ibfk_1 FOREIGN KEY (quiz_id) REFERENCES quiz (id) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS user_forgot (
   uid bigint(20) NOT NULL,
@@ -84,4 +84,4 @@ CREATE TABLE IF NOT EXISTS user_forgot (
   KEY uf_uid (uid),
   KEY uf_email (email,expiry),
   KEY uf_mobile (mobile,expiry)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

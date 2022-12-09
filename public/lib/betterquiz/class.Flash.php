@@ -20,7 +20,7 @@ class Flash {
 	}
 
 	public function __construct($msg, $class="info") {
-		@session_start();
+		SessionStore::Start();
 		$this->_class = $class;
 		$this->_msg = $msg;
 
@@ -32,8 +32,8 @@ class Flash {
 		$flashes[] = $this;
 		$_SESSION["_flash"] = $flashes;
 		error_log("Set _flash = " . json_encode($flashes));
-		session_commit();
-	}	
+		SessionStore::Commit();
+	}
 
 	public static function Load() {
 		@session_start();

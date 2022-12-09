@@ -49,7 +49,8 @@ Usage:
   betterquiz.php (-h | --help)
   betterquiz.php --version
   betterquiz.php bulksms [--username=USERNAME --password=PASSWORD]
-  betterquiz.php download [--remotedir=REMOTEDIR] [--localdir=LOCALDIR]
+  betterquiz.php deploy [--remote=REMOTE]
+  betterquiz.php download [--remote=REMOTE] [--local=LOCAL]
   betterquiz.php database [--host=HOST --username=USERNAME --password=PASSWORD --database=DATABASE]
   betterquiz.php panacea [--username=USERNAME --password=PASSWORD]
   betterquiz.php apache --fqdn=FQDN [--php=PHPVERSION] [--port=PORT] [--no-ssl]  
@@ -58,8 +59,8 @@ Usage:
 Options:
   -h --help                  Show this screen.
   --version                  Show version.
-  --localdir=LOCALDIR        Local directory to store site backup [default: ./live-site-backup].
-  --remotedir=REMOTEDIR      Remote directory on website for web site files [default: /betterquiz:/usr/www/users/quizbakqhw/].
+  --local=LOCAL              Local directory to store site backup [default: ./live-site-backup].
+  --remote=REMOTE            Remote directory on website for web site files [default: betterquiz:/usr/www/users/quizbakqhw/].
   --fqdn=FQDN                Fully qualified domain name of the betterquiz instance.
   --host=HOST                Server host of the database [default: localhost].
   --database=DATABASE        Database name [default: betterquiz].
@@ -178,9 +179,9 @@ function DatabaseCommand(docopt\Response $args) {
  */
 function DeployCommand(docopt\Response $args) {
 	$src = "./public/";
-	$dest= $args["--remote-dir"];
+	$dest= $args["--remote"];
 
-	$cmd = "rsync -avz $src $dest";
+	$cmd = "rsync -avz --exclude settings.local.php --exclude .htaccess $src $dest";
 
 	$stdout = [];
 	$resultCode = 0;
@@ -192,16 +193,14 @@ function DeployCommand(docopt\Response $args) {
 		exit($resultCode);
 	}
 }
-}
-
 /**
  * DownloadOrUploadCommand downloads or uploads a backup copy
  * of the site.
  */
 function DownloadOrUploadCommand(docopt\Response $args) {
 	$downloading = $args['download'];
-	$localDir = './live-site-backup/';
-	$remoteDir = 'betterquiz:/usr/www/users/quizbakqhw/';
+	$localDir = $args["--local"];
+	$remoteDir = $args["--remote"];
 	if ($downloading) {
 		$src = $remoteDir;
 		$dest = $localDir;
